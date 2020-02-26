@@ -14,6 +14,8 @@ public class Repaint implements Runnable{
 		System.out.println("Start thread repaint");
 		while(!stop) {
 			
+			
+			monControleur.getMonAffichage().revalidate(); 
 			monControleur.getMonAffichage().repaint(); 
        
 	      try { Thread.sleep((int)1000/24); }

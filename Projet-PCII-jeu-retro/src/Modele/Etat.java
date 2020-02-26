@@ -13,10 +13,17 @@ public class Etat {
 	
 	private Controleur monControleur; 
 	
-	//Distance entre la moto et la route
-	private int distanceMotoRoute;
+	private static int distanceLimiteAcceleration = 100;
+	
+	private int distanceMotoCentreRoute ; 
 	
 	private int distance_parcourue ;  //Disance parcourue par la moto 
+	
+	private int vitesse ;
+	
+	private int acceleration ; 
+
+	
 	
 	
 	public Etat(Controleur monControleur) {
@@ -25,11 +32,15 @@ public class Etat {
 		
 		this.positionX = monControleur.getMonAffichage().getPositionMotoCentre(); 
 		this.positionY = monControleur.getMonAffichage().getHaut()- monControleur.getMonAffichage().getDimensionMotoHAUT(); 
-		this.distanceMotoRoute = 0; 
+	//	this.distanceLimiteAcceleration = 0; 
 		
 		this.distance_parcourue = 0 ; 
 		
 		this.score = 0;
+		this.vitesse = 0 ;
+		this.acceleration = 1; 
+		
+		this.distanceMotoCentreRoute = 0 ; 
 		
 	}
 	
@@ -71,7 +82,12 @@ public class Etat {
 		positionX += deplacement;
 	}
 	
-	
+	public void calculAcceleration() {
+		
+		int coef = (distanceLimiteAcceleration - distanceMotoCentreRoute) / distanceLimiteAcceleration; 
+		
+		acceleration = coef * acceleration; 
+	}
 	
 	
 	

@@ -16,6 +16,9 @@ public class Affichage extends JPanel{
 	private int dimensiontMotoLARG = 50;
 	private int dimensiontMotoHAUT = 50;
 	private int positionMotoCentre = (int) (LARG/2) - (int)(dimensiontMotoLARG/2);
+	
+	private int largeurRouteDemiRoute = 50 ; 
+	
 
 	
 	public Affichage(Controleur monControleur) {
@@ -42,17 +45,32 @@ public class Affichage extends JPanel{
 
 	 ArrayList<Point> list_point = this.monControleur.getMaRoute().getRoute();
 	 
+	 
+	 
    	 for(int i = 0; i < list_point.size()-1; i++) {
+   		 
+   		 
 		 
 		 Point p =  list_point.get(i);	
 		 
-    	 g.drawLine(list_point.get(i).x, list_point.get(i).y + monControleur.getMonEtat().getDistance(), list_point.get(i+1).x, list_point.get(i+1).y+monControleur.getMonEtat().getDistance());
+		
+		 
+		 //ligne de gauche 
+    	 g.drawLine(  list_point.get(i).x- largeurRouteDemiRoute,list_point.get(i).y  + monControleur.getMonEtat().getDistance(), list_point.get(i+1).x -largeurRouteDemiRoute, list_point.get(i+1).y+monControleur.getMonEtat().getDistance());
+
+    	 
+    	 //ligne de droite 
+    	 g.drawLine(  list_point.get(i).x +largeurRouteDemiRoute,  list_point.get(i).y+ monControleur.getMonEtat().getDistance(), list_point.get(i+1).x+largeurRouteDemiRoute, list_point.get(i+1).y+monControleur.getMonEtat().getDistance());
 
 	 }
 		
 	}
 	
 	
+	public int map(int x, int in_min, int in_max, int out_min, int out_max) {
+		
+		return (((x-in_min)* (out_max - out_min)) / (in_max - in_min))  + out_min ; 
+	}
 	
 	
 	
@@ -86,6 +104,8 @@ public class Affichage extends JPanel{
 	public int getHorizon() {
 		return horizonY;
 	}
+	
+	
 
 
 }
