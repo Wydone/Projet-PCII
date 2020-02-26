@@ -1,5 +1,8 @@
 package Modele;
 
+import java.awt.Point;
+import java.util.ArrayList;
+
 import Controleur.Controleur;
 
 public class Etat {
@@ -47,7 +50,7 @@ public class Etat {
 	
 	public void goUp() {
 		
-		
+		calculDistanceMotoCentreRoute();
 		if((positionY - deplacement) > 0) {
 			
 			
@@ -64,10 +67,9 @@ public class Etat {
 			
 			if(positionY + deplacement < monControleur.getMonAffichage().HAUT) {
 				positionY += deplacement;
+				
 			}
 		}
-	
-	
 	
 	
 	
@@ -75,6 +77,7 @@ public class Etat {
 
 		System.out.println("Go left");
 		positionX -= deplacement;
+		
 	}
 	
 	public void goRight() {
@@ -89,6 +92,43 @@ public class Etat {
 		acceleration = coef * acceleration; 
 	}
 	
+	public void calculDistanceMotoCentreRoute() {
+		
+		
+		ArrayList<Point> arraySelectionPoint = new ArrayList<Point>();
+		arraySelectionPoint = monControleur.getMaRoute().getRoute();
+		
+		System.out.println("TEST");
+		
+		System.out.println(arraySelectionPoint);
+		
+		int i = 0; 
+		
+		while(arraySelectionPoint.get(i).y >= monControleur.getMonAffichage().HAUT) {
+			System.out.println("Valeur de i : "+ i);
+			System.out.println("Valeur de y du point : "+ arraySelectionPoint.get(i).y);
+
+			i++; 
+		}
+		System.out.println("Valeur de i : "+ i);
+		
+		Point A = arraySelectionPoint.get(i-1); //Init du point antérieur à la HAUT
+		Point B = arraySelectionPoint.get(i);
+		
+		System.out.println("A : "+ A);
+		System.out.println("B : "+ B);
+
+		
+		float coef_pente_AB = (B.y - A.y)/(B.x - A.x);
+		
+		int current_x_pos = (int) (coef_pente_AB * (monControleur.getMonAffichage().HAUT - A.y))+ A.x; 
+		
+		System.out.println("Milieu route X : " + current_x_pos);
+		
+		
+		
+		
+	}
 	
 	
 	public int getPositionX() {
