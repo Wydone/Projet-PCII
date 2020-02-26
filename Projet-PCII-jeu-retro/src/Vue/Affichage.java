@@ -35,7 +35,7 @@ public class Affichage extends JPanel{
 		g2d.clearRect(0,0,LARG,HAUT);
 
 		g2d.drawLine(0, horizonY, LARG, horizonY);
-		g2d.drawOval(positionMotoCentre, monControleur.getMonEtat().getPositionY(), dimensiontMotoLARG, dimensiontMotoHAUT);
+		g2d.drawOval(monControleur.getMonEtat().getPositionX(), monControleur.getMonEtat().getPositionY(), dimensiontMotoLARG, dimensiontMotoHAUT);
 		
 
 

@@ -55,12 +55,13 @@ public class Etat {
 	
 	public void goLeft() {
 
+		System.out.println("Go left");
 		positionX -= deplacement;
 	}
 	
 	public void goRight() {
-		
-		positionX -= deplacement;
+		System.out.println("Go right");
+		positionX += deplacement;
 	}
 	
 	
