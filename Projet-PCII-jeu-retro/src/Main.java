@@ -20,6 +20,9 @@ public class Main {
 
 		view.addKeyListener(c);
 		
+		Avancer a = new Avancer(c); 
+		new Thread(a).start();
+		
 		JFrame fenetre = new JFrame("Projet IHM");
 		fenetre.addKeyListener(c);
 		fenetre.add(view);

@@ -34,7 +34,8 @@ public class Affichage extends JPanel{
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.clearRect(0,0,LARG,HAUT);
 
-		g2d.drawLine(0, horizonY, LARG, horizonY);
+		g2d.drawLine(0, horizonY, LARG, horizonY); //Horizon 
+		
 		g2d.drawOval(monControleur.getMonEtat().getPositionX(), monControleur.getMonEtat().getPositionY(), dimensiontMotoLARG, dimensiontMotoHAUT);
 		
 
@@ -43,8 +44,9 @@ public class Affichage extends JPanel{
 	 
    	 for(int i = 0; i < list_point.size()-1; i++) {
 		 
-		 Point p =  list_point.get(i);		 
-    	 g.drawLine(list_point.get(i).x, list_point.get(i).y, list_point.get(i+1).x, list_point.get(i+1).y);
+		 Point p =  list_point.get(i);	
+		 
+    	 g.drawLine(list_point.get(i).x, list_point.get(i).y + monControleur.getMonEtat().getDistance(), list_point.get(i+1).x, list_point.get(i+1).y+monControleur.getMonEtat().getDistance());
 
 	 }
 		

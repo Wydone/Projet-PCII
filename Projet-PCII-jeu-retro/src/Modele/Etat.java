@@ -6,6 +6,7 @@ public class Etat {
 	
 	private int positionX ;
 	private int positionY ; 
+	
 	private int score;
 	
 	private int deplacement = 10; 
@@ -13,7 +14,10 @@ public class Etat {
 	private Controleur monControleur; 
 	
 	//Distance entre la moto et la route
-	private int distance;
+	private int distanceMotoRoute;
+	
+	private int distance_parcourue ;  //Disance parcourue par la moto 
+	
 	
 	public Etat(Controleur monControleur) {
 		this.monControleur = monControleur; 
@@ -21,7 +25,10 @@ public class Etat {
 		
 		this.positionX = monControleur.getMonAffichage().getPositionMotoCentre(); 
 		this.positionY = monControleur.getMonAffichage().getHaut()- monControleur.getMonAffichage().getDimensionMotoHAUT(); 
-		this.distance = 0; 
+		this.distanceMotoRoute = 0; 
+		
+		this.distance_parcourue = 0 ; 
+		
 		this.score = 0;
 		
 	}
@@ -94,6 +101,17 @@ public class Etat {
 
 	public void setControleur(Controleur monControleur) {
 	}
+
+
+	public int getDistance() {
+		return distance_parcourue;
+	}
+
+
+	public void setDistance(int distance) {
+		this.distance_parcourue += distance;
+	}
+	
 	
 	
 
