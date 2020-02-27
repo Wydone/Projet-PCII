@@ -119,7 +119,7 @@ public class Etat {
 		System.out.println("B : "+ B);
 
 		
-		float coef_pente_AB = (B.y - A.y)/(B.x - A.x);
+		float coef_pente_AB = ((B.y + distance_parcourue) - (A.y- distance_parcourue))/(B.x - A.x);
 		
 		int current_x_pos = (int) (coef_pente_AB * (monControleur.getMonAffichage().HAUT - A.y))+ A.x; 
 		

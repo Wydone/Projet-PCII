@@ -20,7 +20,7 @@ public class Route {
 		
 		Point p0 = new Point((int)(this.monControleur.getMonAffichage().getLarg()/2), this.monControleur.getMonAffichage().getHaut()+500);
 		Point p1 = new Point((int)(this.monControleur.getMonAffichage().getLarg()/2), this.monControleur.getMonAffichage().getHaut());
-		Point p2 = new Point((int)(this.monControleur.getMonAffichage().getLarg()/2), this.monControleur.getMonAffichage().getHorizon());
+		Point p2 = new Point(((int)(this.monControleur.getMonAffichage().getLarg()/2)+10), this.monControleur.getMonAffichage().getHorizon());
 		points.add(p1);
 		points.add(p2);
 
