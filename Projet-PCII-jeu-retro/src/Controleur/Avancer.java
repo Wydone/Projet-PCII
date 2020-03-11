@@ -16,12 +16,23 @@ public class Avancer implements Runnable {
 		
 
 		while(!stop){
+			int actualisation = monControleur.getMonAffichage().map((int)monControleur.getMonEtat().getVitesse(), 200, 0,10,0);
+
+			monControleur.getMonEtat().setDistance(actualisation);
 			
-			monControleur.getMonEtat().setDistance(4);
+			//monControleur.getMonEtat().calculCentreRoute();
+			monControleur.getMonEtat().calculDistanceMotoCentreRoute(); 
+			
+			monControleur.getMonEtat().calculAcceleration();
+			
+			monControleur.getMonEtat().calculVitesse(); 
+			
 			
 	
 			try {
-				Thread.sleep(50);
+				
+				
+				Thread.sleep(40);
 			}catch (Exception e) {
 				e.printStackTrace();
 			}

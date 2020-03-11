@@ -18,9 +18,9 @@ public class Route {
 		this.monControleur.setMaRoute(this);
 		
 		
-		Point p0 = new Point((int)(this.monControleur.getMonAffichage().getLarg()/2), this.monControleur.getMonAffichage().getHaut()+500);
-		Point p1 = new Point((int)(this.monControleur.getMonAffichage().getLarg()/2), this.monControleur.getMonAffichage().getHaut());
-		Point p2 = new Point(((int)(this.monControleur.getMonAffichage().getLarg()/2)+10), this.monControleur.getMonAffichage().getHorizon());
+		Point p0 = new Point((int)(this.monControleur.getMonAffichage().getLarg()/2), this.monControleur.getMonAffichage().getHaut()+100);
+		Point p1 = new Point((int)(this.monControleur.getMonAffichage().getLarg()/2+50), this.monControleur.getMonAffichage().getHaut());
+		Point p2 = new Point(((int)(this.monControleur.getMonAffichage().getLarg()/2+100)), this.monControleur.getMonAffichage().getHorizon());
 		points.add(p1);
 		points.add(p2);
 
@@ -50,11 +50,11 @@ public class Route {
 				
 				System.out.println("New point");
 				
-				int Min = 200; 
-				int Max = 600;  
+				int Min = 250; 
+				int Max = 450;  
 				
 				int x = Min + (int)(Math.random() * ((Max - Min)+1));
-				int y =  points.get(points.size()-1).y - 100 ; 
+				int y =  points.get(points.size()-1).y - 160 ; 
 				
 				
 				Point pointOut = new Point(x,y);

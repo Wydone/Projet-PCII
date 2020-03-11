@@ -42,27 +42,38 @@ public class Affichage extends JPanel{
 		g2d.drawOval(monControleur.getMonEtat().getPositionX(), monControleur.getMonEtat().getPositionY(), dimensiontMotoLARG, dimensiontMotoHAUT);
 		
 
-
+		
 	 ArrayList<Point> list_point = this.monControleur.getMaRoute().getRoute();
 	 
 	 
 	 
    	 for(int i = 0; i < list_point.size()-1; i++) {
    		 
-   		 
-		 
 		 Point p =  list_point.get(i);	
+		 Point p2 =  list_point.get(i+1);	
 		 
 		
 		 
+		 int perspectiveRoute1 = map(p.y + monControleur.getMonEtat().getDistance(), horizonY, HAUT,5 ,60); 
+		 int perspectiveRoute2 = map(p2.y + monControleur.getMonEtat().getDistance(), horizonY, HAUT,5 ,60); 
+		 System.out.println("Map : " + largeurRouteDemiRoute);
+		
+		 
 		 //ligne de gauche 
-    	 g.drawLine(  list_point.get(i).x- largeurRouteDemiRoute,list_point.get(i).y  + monControleur.getMonEtat().getDistance(), list_point.get(i+1).x -largeurRouteDemiRoute, list_point.get(i+1).y+monControleur.getMonEtat().getDistance());
+    	 g.drawLine(list_point.get(i).x- perspectiveRoute1,list_point.get(i).y  + monControleur.getMonEtat().getDistance(), list_point.get(i+1).x -perspectiveRoute2, list_point.get(i+1).y+monControleur.getMonEtat().getDistance());
 
-    	 
     	 //ligne de droite 
-    	 g.drawLine(  list_point.get(i).x +largeurRouteDemiRoute,  list_point.get(i).y+ monControleur.getMonEtat().getDistance(), list_point.get(i+1).x+largeurRouteDemiRoute, list_point.get(i+1).y+monControleur.getMonEtat().getDistance());
+    	 g.drawLine(  list_point.get(i).x +perspectiveRoute1,  list_point.get(i).y+ monControleur.getMonEtat().getDistance(), list_point.get(i+1).x+perspectiveRoute2, list_point.get(i+1).y+monControleur.getMonEtat().getDistance());
 
 	 }
+   	 
+   	 g2d.setColor(new Color(255, 255, 255));
+     g2d.fillRect(0, 0, LARG, horizonY);
+     
+ 	 g2d.setColor(new Color(0, 0, 0));
+     g2d.drawString("Vitesse : " +(int) monControleur.getMonEtat().getVitesse() + " km/h", 20, 20); 
+
+     g2d.drawString("Score : " +(int) monControleur.getMonEtat().getDistance(), LARG -120 , 20); 
 		
 	}
 	

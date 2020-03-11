@@ -7,24 +7,26 @@ import Controleur.Controleur;
 
 public class Etat {
 	
-	private int positionX ;
-	private int positionY ; 
+	private int positionX ; //postion x de la moto
+	private int positionY ; //position y de la moto
 	
 	private int score;
 	
-	private int deplacement = 10; 
+	private int deplacement = 20; 
 	
 	private Controleur monControleur; 
 	
-	private static int distanceLimiteAcceleration = 100;
+	private static int distanceLimiteAcceleration ;
 	
-	private int distanceMotoCentreRoute ; 
+	private double distanceMotoCentreRoute ; 
 	
 	private int distance_parcourue ;  //Disance parcourue par la moto 
 	
-	private int vitesse ;
+	private float vitesse ;
 	
-	private int acceleration ; 
+	private float vitesseMax = 200 ;
+	
+	private float acceleration ; 
 
 	
 	
@@ -40,17 +42,19 @@ public class Etat {
 		this.distance_parcourue = 0 ; 
 		
 		this.score = 0;
-		this.vitesse = 0 ;
+		this.vitesse = 100 ;
 		this.acceleration = 1; 
 		
 		this.distanceMotoCentreRoute = 0 ; 
+		
+		this.distanceLimiteAcceleration = 150 ; 
 		
 	}
 	
 	
 	public void goUp() {
 		
-		calculDistanceMotoCentreRoute();
+		calculCentreRoute();
 		if((positionY - deplacement) > 0) {
 			
 			
@@ -87,45 +91,74 @@ public class Etat {
 	
 	public void calculAcceleration() {
 		
-		int coef = (distanceLimiteAcceleration - distanceMotoCentreRoute) / distanceLimiteAcceleration; 
+		float coef = (float) ((distanceLimiteAcceleration - distanceMotoCentreRoute) / distanceLimiteAcceleration); 
 		
-		acceleration = coef * acceleration; 
+		acceleration = coef; 
 	}
 	
-	public void calculDistanceMotoCentreRoute() {
+	public int calculCentreRoute() {
 		
 		
 		ArrayList<Point> arraySelectionPoint = new ArrayList<Point>();
 		arraySelectionPoint = monControleur.getMaRoute().getRoute();
 		
-		System.out.println("TEST");
-		
-		System.out.println(arraySelectionPoint);
+	
+		//System.out.println("Mon array de point : "+arraySelectionPoint);
 		
 		int i = 0; 
-		
-		while(arraySelectionPoint.get(i).y >= monControleur.getMonAffichage().HAUT) {
-			System.out.println("Valeur de i : "+ i);
-			System.out.println("Valeur de y du point : "+ arraySelectionPoint.get(i).y);
-
+		System.out.println("Distance parcourue : "+ distance_parcourue);
+		while((arraySelectionPoint.get(i).y + distance_parcourue) >= monControleur.getMonAffichage().HAUT) {
+			//System.out.println("Valeur de i : "+ i);
+		//	System.out.println("Valeur de y du point : "+ arraySelectionPoint.get(i).y);
+			System.out.println("TEST");
 			i++; 
 		}
-		System.out.println("Valeur de i : "+ i);
+		
+		//System.out.println("Fin du while");
+		//System.out.println("Valeur de i : "+ i);
 		
 		Point A = arraySelectionPoint.get(i-1); //Init du point antérieur à la HAUT
 		Point B = arraySelectionPoint.get(i);
 		
-		System.out.println("A : "+ A);
-		System.out.println("B : "+ B);
+		//System.out.println("A : "+ A);
+		//System.out.println("B : "+ B);
 
 		
-		float coef_pente_AB = ((B.y + distance_parcourue) - (A.y- distance_parcourue))/(B.x - A.x);
+		float coef_pente_AB = (float) ((B.x) - (A.x))/(B.y - A.y);
 		
-		int current_x_pos = (int) (coef_pente_AB * (monControleur.getMonAffichage().HAUT - A.y))+ A.x; 
+		int current_x_centre_route = (int) (coef_pente_AB * ((A.y + distance_parcourue) - monControleur.getMonAffichage().HAUT ))+ A.x; 
+		System.out.println("coef : "+coef_pente_AB);
+
 		
-		System.out.println("Milieu route X : " + current_x_pos);
+		System.out.println("Milieu route X : " + current_x_centre_route);
+		
+
+		return  current_x_centre_route; 
+	}
+	
+	public void calculDistanceMotoCentreRoute() {
+		int x_route = calculCentreRoute() ; 
+		
+		double pythagoreDistance =((positionX - x_route)*(positionX - x_route) )+( (monControleur.getMonAffichage().HAUT- positionY)*(monControleur.getMonAffichage().HAUT- positionY)) ;
+		
+		distanceMotoCentreRoute = Math.sqrt(pythagoreDistance); 
+		
+		System.out.println("distance centre et moto : "+ distanceMotoCentreRoute);
+	}
+	
+	public void calculVitesse() {
+		
+		System.out.println("Acceleration coef : "+ acceleration);
 		
 		
+		if(vitesse > vitesseMax) {
+			vitesse = vitesseMax; 
+		}else if (vitesse < 0.0) {
+			vitesse = 0; 
+			
+		}else {
+			vitesse +=(float) (acceleration * 1); 
+		}
 		
 		
 	}
@@ -166,6 +199,10 @@ public class Etat {
 
 	public void setDistance(int distance) {
 		this.distance_parcourue += distance;
+	}
+	
+	public float getVitesse() {
+		return this.vitesse;
 	}
 	
 	
