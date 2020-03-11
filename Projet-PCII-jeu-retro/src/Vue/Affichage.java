@@ -19,6 +19,9 @@ public class Affichage extends JPanel{
 	
 	private int largeurRouteDemiRoute = 50 ; 
 	
+	private int cpt; //compteur de temps
+	private int horloge ; 
+	
 
 	
 	public Affichage(Controleur monControleur) {
@@ -27,11 +30,16 @@ public class Affichage extends JPanel{
 		this.monControleur.setMonAffichage(this);
 		this.setFocusable(true);
 		this.requestFocus();
+		
+		this.cpt = 0; 
+		this.horloge = 20; 
 	}
 	
 
 	@Override
 	public void paint(Graphics g) {
+		
+		cpt ++; 
 		
 		
 		Graphics2D g2d = (Graphics2D) g;
@@ -56,7 +64,7 @@ public class Affichage extends JPanel{
 		 
 		 int perspectiveRoute1 = map(p.y + monControleur.getMonEtat().getDistance(), horizonY, HAUT,5 ,60); 
 		 int perspectiveRoute2 = map(p2.y + monControleur.getMonEtat().getDistance(), horizonY, HAUT,5 ,60); 
-		 System.out.println("Map : " + largeurRouteDemiRoute);
+		 //System.out.println("Map : " + largeurRouteDemiRoute);
 		
 		 
 		 //ligne de gauche 
@@ -74,6 +82,16 @@ public class Affichage extends JPanel{
      g2d.drawString("Vitesse : " +(int) monControleur.getMonEtat().getVitesse() + " km/h", 20, 20); 
 
      g2d.drawString("Score : " +(int) monControleur.getMonEtat().getDistance(), LARG -120 , 20); 
+
+     g2d.drawString("Temps restant : " + horloge, LARG -150, HAUT -50); 
+     
+     
+     //chrono
+     if (cpt == 24) {
+    	 horloge --; 
+    	 cpt = 0; 
+     }
+     
 		
 	}
 	
