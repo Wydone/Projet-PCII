@@ -21,9 +21,6 @@ public class Controleur implements KeyListener {
 	}
 
 	
-
-	
-	
 	
 
 	public Etat getMonEtat() {

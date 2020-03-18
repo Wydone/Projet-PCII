@@ -39,6 +39,8 @@ public class Affichage extends JPanel{
 	@Override
 	public void paint(Graphics g) {
 		
+	
+		
 		cpt ++; 
 		
 		
@@ -91,6 +93,18 @@ public class Affichage extends JPanel{
     	 horloge --; 
     	 cpt = 0; 
      }
+     
+ 	if( ! monControleur.getMonEtat().getStart()) { //Si le jeu est bien dans l'état "fin"
+		
+ 	
+ 		Font myFont = new Font ("Courier New", 1, 40);
+ 		g2d.setFont(myFont);
+ 		g2d.setColor(new Color(0, 0, 0));
+ 		g2d.drawString("YOU LOOSE", LARG/2 - 140, HAUT/2); 
+ 		g2d.drawString("YOUR SCORE IS : " + monControleur.getMonEtat().getDistance(), LARG/2 - 210, HAUT/2 + 100); 
+ 		
+ 		
+	}
      
 		
 	}

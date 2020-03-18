@@ -20,12 +20,21 @@ public class Avancer implements Runnable {
 
 			monControleur.getMonEtat().setDistance(actualisation);
 			
-			//monControleur.getMonEtat().calculCentreRoute();
+			
 			monControleur.getMonEtat().calculDistanceMotoCentreRoute(); 
 			
-			monControleur.getMonEtat().calculAcceleration();
+			monControleur.getMonEtat().calculAcceleration(); //Calcul l'acceleration 
 			
-			monControleur.getMonEtat().calculVitesse(); 
+			monControleur.getMonEtat().calculVitesse(); //calcul la vitesse 
+			
+			
+			//Fin du thread si la moto n'avance plus 
+			if(monControleur.getMonEtat().getVitesse() == 0.0) {
+				
+				stop = true; 
+				
+				monControleur.getMonEtat().setStart(false);
+			}
 			
 			
 	

@@ -23,7 +23,7 @@ public class Main {
 		Avancer a = new Avancer(c); 
 		new Thread(a).start();
 		
-		JFrame fenetre = new JFrame("Projet IHM");
+		JFrame fenetre = new JFrame("Projet PCII");
 		fenetre.addKeyListener(c);
 		fenetre.add(view);
 		fenetre.pack();

@@ -28,6 +28,7 @@ public class Etat {
 	
 	private float acceleration ; 
 
+	private boolean start ; 
 	
 	
 	
@@ -49,6 +50,8 @@ public class Etat {
 		
 		this.distanceLimiteAcceleration = 150 ; 
 		
+		this.start = true ; 
+		
 	}
 	
 	
@@ -57,13 +60,9 @@ public class Etat {
 		calculCentreRoute();
 		if((positionY - deplacement) > 0) {
 			
-			
-			System.out.println("if ok : " + positionX);
 			positionY -= deplacement;
 		}
-		
-		System.out.println("Après  : " + positionX);
-
+	
 		
 	}
 	
@@ -74,7 +73,6 @@ public class Etat {
 				
 			}
 		}
-	
 	
 	
 	public void goLeft() {
@@ -110,7 +108,7 @@ public class Etat {
 		while((arraySelectionPoint.get(i).y + distance_parcourue) >= monControleur.getMonAffichage().HAUT) {
 			//System.out.println("Valeur de i : "+ i);
 		//	System.out.println("Valeur de y du point : "+ arraySelectionPoint.get(i).y);
-			System.out.println("TEST");
+		//	System.out.println("TEST");
 			i++; 
 		}
 		
@@ -203,6 +201,14 @@ public class Etat {
 	
 	public float getVitesse() {
 		return this.vitesse;
+	}
+	
+	public boolean getStart() {
+		return this.start; 
+	}
+	
+	public void setStart(boolean b) {
+		this.start = b ; 
 	}
 	
 	
