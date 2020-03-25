@@ -17,11 +17,6 @@ public class CheckPoint {
 		
 		
 		
-		
-		
-
-		
-		
 		int alea = (int)(Math.random() * (2 - 0 ));
 		if(alea == 0) {
 			this.posX = this.monControleur.getMonAffichage().getCheckPointG_InterMinSUP() + (int)(Math.random() * ((this.monControleur.getMonAffichage().getCheckPointG_InterMaxSUP() - this.monControleur.getMonAffichage().getCheckPointG_InterMinSUP()))-1);

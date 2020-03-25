@@ -18,6 +18,11 @@ public class Repaint implements Runnable{
 			monControleur.getMonAffichage().revalidate(); 
 			
 			monControleur.getMonAffichage().repaint(); 
+			
+			
+			if(!monControleur.getMonEtat().getStart()) {
+				stop = true;
+			}
        
 	      try { Thread.sleep((int)1000/24); }
 	      catch (Exception e) { e.printStackTrace(); }
