@@ -3,6 +3,7 @@ package Controleur;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import Modele.CheckPoint;
 import Modele.Etat;
 import Modele.Route;
 import Vue.Affichage;
@@ -12,6 +13,8 @@ public class Controleur implements KeyListener {
 	private Etat monEtat;
 	private Affichage monAffichage; 
 	private Route maRoute;
+	private CheckPoint monCheckPoint;
+
 	
 	
 	public Controleur() {
@@ -20,11 +23,21 @@ public class Controleur implements KeyListener {
 		
 	}
 
-	
 
-	
-	
-	
+
+	public CheckPoint getMonCheckPoint() {
+		return monCheckPoint;
+	}
+
+	public void setMonCheckPoint(CheckPoint monCheckPoint) {
+		this.monCheckPoint = monCheckPoint;
+	}
+
+
+
+
+
+
 
 	public Etat getMonEtat() {
 		return monEtat;
@@ -58,7 +71,6 @@ public class Controleur implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		
-		System.out.println("KeyPressed");
 		int keyCode = e.getKeyCode();
 		
 		switch(keyCode) {

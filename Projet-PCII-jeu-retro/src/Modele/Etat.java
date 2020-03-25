@@ -3,7 +3,9 @@ package Modele;
 import java.awt.Point;
 import java.util.ArrayList;
 
+import Vue.Affichage;
 import Controleur.Controleur;
+import Modele.CheckPoint;
 
 public class Etat {
 	
@@ -11,9 +13,11 @@ public class Etat {
 	private int positionY ; //position y de la moto
 	
 	private int score;
-	
 	private int deplacement = 20; 
-	
+	private int horloge ; 
+	private int cptDistance_CheckPoint = 0 ; 
+
+
 	private Controleur monControleur; 
 	
 	private static int distanceLimiteAcceleration ;
@@ -48,23 +52,57 @@ public class Etat {
 		this.distanceMotoCentreRoute = 0 ; 
 		
 		this.distanceLimiteAcceleration = 150 ; 
-		
+		this.horloge = 20; 
+
 	}
 	
 	
+	public int getHorloge() {
+		return horloge;
+	}
+
+	public void actualiserHorloge() {
+		 this.horloge--;
+
+	}
+	
+
+	public void setHorloge(int newHorloge) {
+		this.horloge = this.horloge + newHorloge;
+	}
+
+
 	public void goUp() {
 		
 		calculCentreRoute();
 		if((positionY - deplacement) > 0) {
 			
 			
-			System.out.println("if ok : " + positionX);
 			positionY -= deplacement;
 		}
 		
-		System.out.println("Après  : " + positionX);
 
 		
+	}
+	
+	
+
+public void collision_motoCheckPoint(int checkPointX, int checkPointY, int checkPointDimX,int checkPointDimY) {
+	Affichage aff = this.getMonControleur().getMonAffichage();
+
+
+	 
+	 if	(	(this.positionX >= checkPointX &&  this.positionX <= (checkPointX + checkPointDimX))	&&	 (this.positionY >= checkPointY &&  this.positionY <= (checkPointY + checkPointDimY ))) {
+		 aff.setCheckPointAffiche(false); 
+		 this.setHorloge(20);
+			System.out.println("TESTTTT");
+
+	    }else if(checkPointY + checkPointDimY >  monControleur.getMonAffichage().HAUT) {
+			 aff.setCheckPointAffiche(false); 
+
+
+	    }
+	 
 	}
 	
 	public void goDown() {
@@ -79,13 +117,11 @@ public class Etat {
 	
 	public void goLeft() {
 
-		System.out.println("Go left");
 		positionX -= deplacement;
 		
 	}
 	
 	public void goRight() {
-		System.out.println("Go right");
 		positionX += deplacement;
 	}
 	
@@ -106,11 +142,9 @@ public class Etat {
 		//System.out.println("Mon array de point : "+arraySelectionPoint);
 		
 		int i = 0; 
-		System.out.println("Distance parcourue : "+ distance_parcourue);
 		while((arraySelectionPoint.get(i).y + distance_parcourue) >= monControleur.getMonAffichage().HAUT) {
 			//System.out.println("Valeur de i : "+ i);
 		//	System.out.println("Valeur de y du point : "+ arraySelectionPoint.get(i).y);
-			System.out.println("TEST");
 			i++; 
 		}
 		
@@ -127,10 +161,8 @@ public class Etat {
 		float coef_pente_AB = (float) ((B.x) - (A.x))/(B.y - A.y);
 		
 		int current_x_centre_route = (int) (coef_pente_AB * ((A.y + distance_parcourue) - monControleur.getMonAffichage().HAUT ))+ A.x; 
-		System.out.println("coef : "+coef_pente_AB);
 
 		
-		System.out.println("Milieu route X : " + current_x_centre_route);
 		
 
 		return  current_x_centre_route; 
@@ -143,12 +175,10 @@ public class Etat {
 		
 		distanceMotoCentreRoute = Math.sqrt(pythagoreDistance); 
 		
-		System.out.println("distance centre et moto : "+ distanceMotoCentreRoute);
 	}
 	
 	public void calculVitesse() {
 		
-		System.out.println("Acceleration coef : "+ acceleration);
 		
 		
 		if(vitesse > vitesseMax) {
@@ -199,6 +229,15 @@ public class Etat {
 
 	public void setDistance(int distance) {
 		this.distance_parcourue += distance;
+		
+		 cptDistance_CheckPoint += distance;
+		 
+		 if(cptDistance_CheckPoint >= 1000) 
+		 {
+			 cptDistance_CheckPoint = 0;
+			 this.monControleur.getMonAffichage().setCheckPointExist(false);
+		 }
+		 
 	}
 	
 	public float getVitesse() {

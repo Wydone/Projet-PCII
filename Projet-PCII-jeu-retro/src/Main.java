@@ -15,7 +15,7 @@ public class Main {
 		Affichage view = new Affichage(c);
 		Etat e = new Etat(c);
 		Route r = new Route(c);
-		Repaint t =  new Repaint(c);
+		Repaint t =  new Repaint(c); 
 		new Thread(t).start(); 
 
 		view.addKeyListener(c);
