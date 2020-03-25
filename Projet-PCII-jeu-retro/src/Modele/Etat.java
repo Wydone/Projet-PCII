@@ -31,6 +31,8 @@ public class Etat {
 	private float vitesseMax = 200 ;
 	
 	private float acceleration ; 
+	
+	private boolean start ;
 
 	
 	
@@ -53,6 +55,9 @@ public class Etat {
 		
 		this.distanceLimiteAcceleration = 150 ; 
 		this.horloge = 20; 
+		
+		
+		this.start = true;
 
 	}
 	
@@ -242,6 +247,14 @@ public void collision_motoCheckPoint(int checkPointX, int checkPointY, int check
 	
 	public float getVitesse() {
 		return this.vitesse;
+	}
+	
+	public boolean getStart() {
+		return this.start; 
+	}
+	
+	public void setStart(boolean b) {
+		this.start = b ; 
 	}
 	
 	

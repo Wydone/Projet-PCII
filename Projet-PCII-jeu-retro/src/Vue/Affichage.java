@@ -30,49 +30,39 @@ public class Affichage extends JPanel{
 	
 	private int borneMaxoute = 80;
 	
-	//Largeur de la route en haut et en bas de l'écran
+	//Largeur de la route en haut et en bas de l'ï¿½cran
 	private int largeur_routeMax = 50;
 	private int largeur_routeMin = (int)(largeur_routeMax/coefPerspective);
 	
 	
-	//Borne a au bas de l'écran d'apparition de la route
+	//Borne a au bas de l'ï¿½cran d'apparition de la route
 	private int RouteINF_InterMin = (int) (LARG/2) - borneMaxoute;
 	private int RouteINF_InterMax = (int) (LARG/2) + borneMaxoute;
 	
-	//Borne a en haut de l'écran d'apparition de la route
+	//Borne a en haut de l'ï¿½cran d'apparition de la route
 	private int RouteSUP_InterMin = (int) (LARG/2) - (int)(borneMaxoute/coefPerspective);
 	private int RouteSUP_InterMax = (int) (LARG/2) + (int)(borneMaxoute/coefPerspective);
 	
 	
-	//Borne a au bas de l'écran d'apparition des checkpoints à Gauche
+	//Borne a au bas de l'ï¿½cran d'apparition des checkpoints ï¿½ Gauche
 	private int CheckPointG_InterMaxINF = RouteINF_InterMin - largeur_routeMax;
 	private int CheckPointG_InterMinINF = 0;
 	
-	//Borne l'horizon d'apparition des checkpoints à Gauche
+	//Borne l'horizon d'apparition des checkpoints ï¿½ Gauche
 	private int CheckPointG_InterMaxSUP = RouteSUP_InterMin - largeur_routeMin;
 	private int CheckPointG_InterMinSUP = CheckPointG_InterMaxSUP - (int)((CheckPointG_InterMaxINF- CheckPointG_InterMinINF) / coefPerspective);
 	
 	
 	
 	
-	//Borne au bas de l'écran d'apparition des checkpoints à Droite
+	//Borne au bas de l'ï¿½cran d'apparition des checkpoints ï¿½ Droite
 	private int CheckPointD_InterMinINF =  RouteINF_InterMax + largeur_routeMax;
 	private int CheckPointD_InterMaxINF = LARG;
 	
-	//Borne l'horizon d'apparition des checkpoints à Droite
+	//Borne l'horizon d'apparition des checkpoints ï¿½ Droite
 	private int CheckPointD_InterMinSUP = RouteSUP_InterMax + largeur_routeMin;
 	private int CheckPointD_InterMaxSUP = CheckPointD_InterMinSUP + (int)((CheckPointD_InterMaxINF- CheckPointD_InterMinINF) / coefPerspective); ;
 	
-
-	
-
-
-
-
-
-
-
-
 
 	public Affichage(Controleur monControleur) {
 		this.setPreferredSize(new Dimension (LARG,HAUT));
@@ -226,8 +216,30 @@ public class Affichage extends JPanel{
 	     }
 	     
 	     
+	  // Section de dessin du panel de fin
+	  	if( ! monControleur.getMonEtat().getStart()) { //Si le jeu est bien dans l'Ã©tat "stop"
+	 		
+	  	
+	  		Font myFont = new Font ("Courier New", 1, 40);
+	  		g2d.setFont(myFont);
+	  		g2d.setColor(new Color(0, 0, 0));
+	  		g2d.drawString("YOU LOOSE", LARG/2 - 140, HAUT/2); 
+	  		g2d.drawString("YOUR SCORE IS : " + monControleur.getMonEtat().getDistance(), LARG/2 - 230, HAUT/2 + 100); 
+	  		
+	 	}
 	     
 	     
+	  //Section de dessin du decors
+	 	g2d.drawLine(0,190, 120,50);
+	 	g2d.drawLine(120,50 , 230,180);
+	 	
+	 	g2d.drawLine(230,180 , 420,100);
+	 	g2d.drawLine(420,100 , 630,180);
+			
+	 	g2d.drawLine(610, 195, 800, 70);
+	 	
+	 	g2d.drawLine(575, 160, 640, 110);
+	 	g2d.drawLine(640, 110, 690, 145); 
 
 		
 		
