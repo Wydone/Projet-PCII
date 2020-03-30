@@ -71,39 +71,62 @@ public class Controleur implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		
+		
 		int keyCode = e.getKeyCode();
 		
 		switch(keyCode) {
 		
-		case KeyEvent.VK_UP: monEtat.goUp();
+		case KeyEvent.VK_UP: monEtat.setUP(true); 
+		
 			break;
 			
-		case KeyEvent.VK_DOWN: monEtat.goDown(); 
+		case KeyEvent.VK_DOWN: monEtat.setDOWN(true);
+			
 			break;
 			
-		case KeyEvent.VK_LEFT: monEtat.goLeft(); 
+		case KeyEvent.VK_LEFT: monEtat.setLEFT(true);
 			break;
 			
-		case KeyEvent.VK_RIGHT: monEtat.goRight(); 
+		case KeyEvent.VK_RIGHT: monEtat.setRIGHT(true);
 			break;
 			
 		}
 		
 				
 	}
+	
+	@Override
+	public void keyReleased(KeyEvent e) {
+		
+		int keyCode = e.getKeyCode();
+		
+		
+		
+		switch(keyCode) {
+		
+			case KeyEvent.VK_UP:  monEtat.setUP(false); //monEtat.goUp();
+			
+				break;
+				
+			case KeyEvent.VK_DOWN: monEtat.setDOWN(false); // monEtat.goDown();
+				
+				break;
+				
+			case KeyEvent.VK_LEFT: monEtat.setLEFT(false); // monEtat.goLeft(); 
+				break;
+				
+			case KeyEvent.VK_RIGHT: monEtat.setRIGHT(false); // monEtat.goRight();
+				break;
+			
+		}
+	}
+
+	
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
-
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	
 	
 	

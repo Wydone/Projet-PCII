@@ -27,6 +27,12 @@ public class Avancer implements Runnable {
 			
 			monControleur.getMonEtat().calculVitesse(); 
 			
+			
+			monControleur.getMonEtat().goUp();
+			monControleur.getMonEtat().goDown();
+			monControleur.getMonEtat().goLeft();
+			monControleur.getMonEtat().goRight();
+			
 			//Fin du thread si la moto n'avance plus 
 			if( (monControleur.getMonEtat().getVitesse() <= 0.0) || (monControleur.getMonEtat().getHorloge() <= 0)) {
 				
