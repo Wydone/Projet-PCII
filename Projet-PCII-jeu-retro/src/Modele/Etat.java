@@ -72,46 +72,10 @@ public class Etat {
 	}
 	
 
-	public void setUP(boolean uP) {
-		UP = uP;
-	}
-
-
-	public void setDOWN(boolean dOWN) {
-		DOWN = dOWN;
-	}
-
-
-	public void setLEFT(boolean lEFT) {
-		LEFT = lEFT;
-	}
-
-
-	public void setRIGHT(boolean rIGHT) {
-		RIGHT = rIGHT;
-	}
-
-
-	public int getHorloge() {
-		return horloge;
-	}
-
-	public void actualiserHorloge() {
-		 this.horloge--;
-
-	}
-	
-
-	public void setHorloge(int newHorloge) {
-		this.horloge = this.horloge + newHorloge;
-	}
-
-
 	public void goUp() {
 		
-		//calculCentreRoute();	
 		
-		System.out.println("UP TEST");
+
 		if(UP) {
 			if((positionY - deplacement) > 0) {
 				
@@ -123,21 +87,21 @@ public class Etat {
 	
 	
 
-public void collision_motoCheckPoint(int checkPointX, int checkPointY, int checkPointDimX,int checkPointDimY) {
-	Affichage aff = this.getMonControleur().getMonAffichage();
+	public void collision_motoCheckPoint(int checkPointX, int checkPointY, int checkPointDimX,int checkPointDimY) {
+		Affichage aff = this.getMonControleur().getMonAffichage();
 
 
 	 
-	 if	(	(this.positionX >= checkPointX &&  this.positionX <= (checkPointX + checkPointDimX))	&&	 (this.positionY >= checkPointY &&  this.positionY <= (checkPointY + checkPointDimY ))) {
-		 aff.setCheckPointAffiche(false); 
-		 this.setHorloge(20);
-			//System.out.println("TESTTTT");
-
-	    }else if(checkPointY + checkPointDimY >  monControleur.getMonAffichage().HAUT) {
+		 if	(	(this.positionX >= checkPointX &&  this.positionX <= (checkPointX + checkPointDimX))	&&	 (this.positionY >= checkPointY &&  this.positionY <= (checkPointY + checkPointDimY ))) {
 			 aff.setCheckPointAffiche(false); 
-
-
-	    }
+			 this.setHorloge(20);
+				//System.out.println("TESTTTT");
+	
+		 }else if(checkPointY + checkPointDimY >  monControleur.getMonAffichage().HAUT) {
+				 aff.setCheckPointAffiche(false); 
+	
+	
+		 }
 	 
 	}
 	
@@ -294,6 +258,41 @@ public void collision_motoCheckPoint(int checkPointX, int checkPointY, int check
 	
 	public void setStart(boolean b) {
 		this.start = b ; 
+	}
+	
+
+	public void setUP(boolean uP) {
+		UP = uP;
+	}
+
+
+	public void setDOWN(boolean dOWN) {
+		DOWN = dOWN;
+	}
+
+
+	public void setLEFT(boolean lEFT) {
+		LEFT = lEFT;
+	}
+
+
+	public void setRIGHT(boolean rIGHT) {
+		RIGHT = rIGHT;
+	}
+
+
+	public int getHorloge() {
+		return horloge;
+	}
+
+	public void actualiserHorloge() {
+		 this.horloge--;
+
+	}
+	
+
+	public void setHorloge(int newHorloge) {
+		this.horloge = this.horloge + newHorloge;
 	}
 	
 	

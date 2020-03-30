@@ -19,6 +19,9 @@ public class Avancer implements Runnable {
 			
 			int actualisation = monControleur.getMonAffichage().map((int)monControleur.getMonEtat().getVitesse(), 200, 0,10,0);
 
+
+			monControleur.getMonEtat().calculCentreRoute();	
+			
 			monControleur.getMonEtat().setDistance(actualisation);
 			
 			monControleur.getMonEtat().calculDistanceMotoCentreRoute(); 
