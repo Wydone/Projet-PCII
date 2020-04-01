@@ -34,6 +34,8 @@ public class Etat {
 	
 	private boolean start ;
 	
+	private boolean loose ; 
+	
 	//Boolean des touches
 	private boolean UP ; 
 	private boolean DOWN ; 
@@ -62,7 +64,9 @@ public class Etat {
 		this.distanceLimiteAcceleration = 150 ; 
 		this.horloge = 20; 
 		
-		this.start = true;
+		this.start = false;
+		this.loose = false ; 
+		
 		
 		this.UP = false; 
 		this.DOWN = false; 
@@ -74,8 +78,6 @@ public class Etat {
 
 	public void goUp() {
 		
-		
-
 		if(UP) {
 			if((positionY - deplacement) > 0) {
 				
@@ -90,7 +92,6 @@ public class Etat {
 	public void collision_motoCheckPoint(int checkPointX, int checkPointY, int checkPointDimX,int checkPointDimY) {
 		Affichage aff = this.getMonControleur().getMonAffichage();
 
-
 	 
 		 if	(	(this.positionX >= checkPointX &&  this.positionX <= (checkPointX + checkPointDimX))	&&	 (this.positionY >= checkPointY &&  this.positionY <= (checkPointY + checkPointDimY ))) {
 			 aff.setCheckPointAffiche(false); 
@@ -99,10 +100,8 @@ public class Etat {
 	
 		 }else if(checkPointY + checkPointDimY >  monControleur.getMonAffichage().HAUT) {
 				 aff.setCheckPointAffiche(false); 
-	
-	
+
 		 }
-	 
 	}
 	
 	public void goDown() {
@@ -115,22 +114,17 @@ public class Etat {
 		}		
 	}
 	
-
-	
 	
 	public void goLeft() {
 		if(LEFT) {
 			positionX -= deplacement;
 		}
-	
-		
 	}
 	
 	public void goRight() {
 		if(RIGHT) {
 			positionX += deplacement;
 		}
-		
 	}
 	
 	public void calculAcceleration() {
@@ -258,6 +252,14 @@ public class Etat {
 	
 	public void setStart(boolean b) {
 		this.start = b ; 
+	}
+	
+	public boolean getLoose() {
+		return this.loose; 
+	}
+	
+	public void setLoose(boolean b) {
+		this.loose = b ; 
 	}
 	
 

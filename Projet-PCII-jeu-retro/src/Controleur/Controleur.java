@@ -90,6 +90,8 @@ public class Controleur implements KeyListener {
 		case KeyEvent.VK_RIGHT: monEtat.setRIGHT(true);
 			break;
 			
+		case KeyEvent.VK_SPACE : monEtat.setStart(true); 
+			
 		}
 		
 				

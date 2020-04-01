@@ -78,11 +78,9 @@ public class Affichage extends JPanel{
 	@Override
 	public void paint(Graphics g) {
 		
-			cpt ++; 
-	
-
-
-
+			if(monControleur.getMonEtat().getStart()) {
+				cpt ++; 
+			}
 			
 			
 			Graphics2D g2d = (Graphics2D) g;
@@ -215,9 +213,17 @@ public class Affichage extends JPanel{
 	    	 cpt = 0; 
 	     }
 	     
+	     //SECTION DE PANEL DU DEBUT
 	     
-	  // Section de dessin du panel de fin
-	  	if( ! monControleur.getMonEtat().getStart()) { //Si le jeu est bien dans l'état "stop"
+	     if(!monControleur.getMonEtat().getStart()) {
+	    	Font myFont = new Font ("Courier New", 1, 40);
+		  	g2d.setFont(myFont);
+		  	g2d.setColor(new Color(0, 0, 0));
+		  	g2d.drawString("PRESS 'SPACE' TO START", LARG/2 - 280, HAUT/2 + 60); 
+	     }
+	     
+	  // Section de dessin du panel de FIN
+	  	if( monControleur.getMonEtat().getLoose()) { //Si le jeu est bien dans l'état "Loose"
 	 		
 	  	
 	  		Font myFont = new Font ("Courier New", 1, 40);

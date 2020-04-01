@@ -19,8 +19,7 @@ public class Repaint implements Runnable{
 			
 			monControleur.getMonAffichage().repaint(); 
 			
-			
-			if(!monControleur.getMonEtat().getStart()) {
+			if(monControleur.getMonEtat().getLoose()) {
 				stop = true;
 			}
        
