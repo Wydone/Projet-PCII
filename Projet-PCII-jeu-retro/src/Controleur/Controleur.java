@@ -19,11 +19,7 @@ public class Controleur implements KeyListener {
 	
 	public Controleur() {
 		
-
-		
 	}
-
-
 
 	public CheckPoint getMonCheckPoint() {
 		return monCheckPoint;
@@ -32,11 +28,6 @@ public class Controleur implements KeyListener {
 	public void setMonCheckPoint(CheckPoint monCheckPoint) {
 		this.monCheckPoint = monCheckPoint;
 	}
-
-
-
-
-
 
 
 	public Etat getMonEtat() {
@@ -63,9 +54,6 @@ public class Controleur implements KeyListener {
 	public void setMonAffichage(Affichage monAffichage) {
 		this.monAffichage = monAffichage;
 	}
-
-
-
 
 
 	@Override

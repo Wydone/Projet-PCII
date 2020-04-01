@@ -30,7 +30,7 @@ public class Affichage extends JPanel{
 	
 	private int borneMaxoute = 80;
 	
-	//Largeur de la route en haut et en bas de l'�cran
+	//Largeur de la route en haut et en bas de l'ecran
 	private int largeur_routeMax = 50;
 	private int largeur_routeMin = (int)(largeur_routeMax/coefPerspective);
 	
@@ -44,18 +44,18 @@ public class Affichage extends JPanel{
 	private int RouteSUP_InterMax = (int) (LARG/2) + (int)(borneMaxoute/coefPerspective);
 	
 	
-	//Borne a au bas de l'�cran d'apparition des checkpoints � Gauche
+	//Borne a au bas de l'�cran d'apparition des checkpoints a Gauche
 	private int CheckPointG_InterMaxINF = RouteINF_InterMin - largeur_routeMax;
 	private int CheckPointG_InterMinINF = 0;
 	
-	//Borne l'horizon d'apparition des checkpoints � Gauche
+	//Borne l'horizon d'apparition des checkpoints a Gauche
 	private int CheckPointG_InterMaxSUP = RouteSUP_InterMin - largeur_routeMin;
 	private int CheckPointG_InterMinSUP = CheckPointG_InterMaxSUP - (int)((CheckPointG_InterMaxINF- CheckPointG_InterMinINF) / coefPerspective);
 	
 	
 	
 	
-	//Borne au bas de l'�cran d'apparition des checkpoints � Droite
+	//Borne au bas de l'�cran d'apparition des checkpoints a Droite
 	private int CheckPointD_InterMinINF =  RouteINF_InterMax + largeur_routeMax;
 	private int CheckPointD_InterMaxINF = LARG;
 	
