@@ -42,7 +42,12 @@ public class Etat {
 	private boolean LEFT ;
 	private boolean RIGHT ; 
 
+	//détermine quand apparaitra le prochain osbstacle
+	private int apparitionNext = 0;
 	
+	ArrayList<Obstacle> mesObstacles = new ArrayList<Obstacle>(); // Creation d'une liste d'obstacle
+	ArrayList<CheckPoint> mesCheckPoint= new ArrayList<CheckPoint>(); // Creation d'une liste de check point
+
 	
 	
 	public Etat(Controleur monControleur) {
@@ -72,7 +77,21 @@ public class Etat {
 		this.DOWN = false; 
 		this.LEFT = false; 
 		this.RIGHT = false ; 
+		
+		System.out.println("Dans Etat");
 
+	    Obstacle newObstacle = new Obstacle(this.monControleur);
+		this.mesObstacles.add(newObstacle);
+		
+	}
+	
+	public ArrayList<CheckPoint> getMesCheckPoint() {
+		return mesCheckPoint;
+	}
+
+
+	public void setMesCheckPoint(ArrayList<CheckPoint> mesCheckPoint) {
+		this.mesCheckPoint = mesCheckPoint;
 	}
 	
 
@@ -89,20 +108,48 @@ public class Etat {
 	
 	
 
-	public void collision_motoCheckPoint(int checkPointX, int checkPointY, int checkPointDimX,int checkPointDimY) {
-		Affichage aff = this.getMonControleur().getMonAffichage();
+	//teste si la moto rentre en colision avec un checkPoint
 
-	 
-		 if	(	(this.positionX >= checkPointX &&  this.positionX <= (checkPointX + checkPointDimX))	&&	 (this.positionY >= checkPointY &&  this.positionY <= (checkPointY + checkPointDimY ))) {
-			 aff.setCheckPointAffiche(false); 
-			 this.setHorloge(20);
-				//System.out.println("TESTTTT");
-	
-		 }else if(checkPointY + checkPointDimY >  monControleur.getMonAffichage().HAUT) {
-				 aff.setCheckPointAffiche(false); 
+		public void collision_motoCheckPoint(int cpt, int checkPointX, int checkPointY, int checkPointDimX,int checkPointDimY) {
+			Affichage aff = this.getMonControleur().getMonAffichage();
+
+			int dimMotoX = this.getMonControleur().getMonAffichage().getDimensiontMotoLARG();
+			int dimMotoY = this.getMonControleur().getMonAffichage().getDimensiontMotoHAUT();
+		 		
+			//Test de la collision
+			 if	(	(this.positionX  + (int)(dimMotoX/2) >= checkPointX &&  this.positionX  + (int)(dimMotoX/2) <= (checkPointX + checkPointDimX))	&&	 (this.positionY  + (int)(dimMotoY/2) >= checkPointY &&  this.positionY  + (int)(dimMotoY/2) <= (checkPointY + checkPointDimY ))) {
+				 this.setHorloge(20);
+				 this.mesCheckPoint.remove(cpt);
+				 
+			//Supprime le check point s'il sort de l'écran	 
+			 }else if(checkPointY + checkPointDimY >  monControleur.getMonAffichage().HAUT) {
+				 this.mesCheckPoint.remove(cpt);
+			 }
+		 
+		}
+		
+		
+		//teste si la moto rentre en colision avec un obstacle
+		public void collision_motoObstacle(int cpt, int obstacleX, int obstacleY, int obstacleDimX,int obstacleDimY) {
+
+			
+			int dimMotoX = this.getMonControleur().getMonAffichage().getDimensiontMotoLARG();
+			int dimMotoY = this.getMonControleur().getMonAffichage().getDimensiontMotoHAUT();
+			
+			//Test de la collision
+			 if	((this.positionX + (int)(dimMotoX/2) >= obstacleX &&  this.positionX + (int)(dimMotoX/2)   <= (obstacleX + obstacleDimX))	&&	 (this.positionY+ (int)(dimMotoY/2)  >= obstacleY &&  this.positionY + (int)(dimMotoY/2) <= (obstacleY  + obstacleDimY ))) {
+				 divideVitesse();
+				 this.mesObstacles.remove(cpt);
+				
+			 //Supprime le check point s'il sort de l'écran	 
+			 }else if(obstacleY + obstacleDimX >  monControleur.getMonAffichage().HAUT) {
+			 this.mesObstacles.remove(cpt);
 
 		 }
-	}
+			 
+			 
+		 
+		}
 	
 	public void goDown() {
 			
@@ -182,7 +229,6 @@ public class Etat {
 	public void calculVitesse() {
 		
 		
-		
 		if(vitesse > vitesseMax) {
 			vitesse = vitesseMax; 
 		}else if (vitesse < 0.0) {
@@ -193,6 +239,10 @@ public class Etat {
 		}
 		
 		
+	}
+	
+	public void divideVitesse() {
+		this.vitesse = (int)(this.vitesse/2);
 	}
 	
 	
@@ -234,12 +284,37 @@ public class Etat {
 		
 		 cptDistance_CheckPoint += distance;
 		 
+		 
+		 
+		 //Création des check point
 		 if(cptDistance_CheckPoint >= 1000) 
 		 {
 			 cptDistance_CheckPoint = 0;
-			 this.monControleur.getMonAffichage().setCheckPointExist(false);
+			 CheckPoint newCheckPoint = new CheckPoint(this.monControleur);	
+			 this.mesCheckPoint.add(newCheckPoint);
 		 }
 		 
+		 
+		 
+			Obstacle monObstacle = this.mesObstacles.get(this.mesObstacles.size()-1);
+			
+		 //Création des obstacle aléatiorement
+		if(monControleur.getMonEtat().getDistance() + monObstacle.getPosY()>= this.apparitionNext + this.getMonControleur().getMonAffichage().getHorizon()) 
+		 {
+			 Obstacle newObstacle = new Obstacle(this.monControleur);	
+			 this.mesObstacles.add(newObstacle);
+			 }
+		 
+		 
+	}
+	
+	public ArrayList<Obstacle> getMesObstacles() {
+		return mesObstacles;
+	}
+
+
+	public void setMesObstacles(ArrayList<Obstacle> mesObstacles) {
+		this.mesObstacles = mesObstacles;
 	}
 	
 	public float getVitesse() {
@@ -298,6 +373,13 @@ public class Etat {
 	}
 	
 	
-	
+	public int getApparitionNext() {
+		return apparitionNext;
+	}
+
+
+	public void setApparitionNext(int apparitionNext) {
+		this.apparitionNext = apparitionNext;
+	}
 
 }

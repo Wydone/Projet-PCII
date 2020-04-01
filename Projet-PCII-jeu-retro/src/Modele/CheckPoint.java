@@ -8,10 +8,30 @@ public class CheckPoint {
 	private int posX = 0;
 	private int posXInitiale = 0;
 	private int posY = 0;
-	private int dimensionX = 50;
-	private int dimensionY = 50;
+	private int dimensionX = 0;
+	private int dimensionY = 0;
+	
+	private int dimensionXMax = 80;
+	private int dimensionYMax = 40;
+	
 	private Controleur monControleur;
 	
+	public int getDimensionXMax() {
+		return dimensionXMax;
+	}
+
+	public void setDimensionXMax(int dimensionXMax) {
+		this.dimensionXMax = dimensionXMax;
+	}
+
+	public int getDimensionYMax() {
+		return dimensionYMax;
+	}
+
+	public void setDimensionYMax(int dimensionYMax) {
+		this.dimensionYMax = dimensionYMax;
+	}
+
 	public CheckPoint(Controleur monControleur) {
 		this.monControleur = monControleur;
 		
@@ -65,7 +85,7 @@ public class CheckPoint {
 	public void setPosY(int posY) {
 		this.posY = posY;
 	}
-
+ 
 	public int getDimensionX() {
 		return dimensionX;
 	}
