@@ -13,6 +13,20 @@ public class Obstacle {
 	private Controleur monControleur;
 	private int dimensionXMax = 40;
 	private int dimensionYMax = 80;
+	private int coefVitesseDescente = 1;
+
+
+
+	public int getCoefVitesseDescente() {
+		return coefVitesseDescente;
+	}
+
+
+
+	public void setCoefVitesseDescente(int coefVitesseDescente) {
+		this.coefVitesseDescente = coefVitesseDescente;
+	}
+
 
 
 	public Obstacle(Controleur monControleur) {
@@ -112,5 +126,3 @@ public class Obstacle {
 	
 	
 }
-
-

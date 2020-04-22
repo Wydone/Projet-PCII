@@ -14,9 +14,18 @@ public class Controleur implements KeyListener {
 	private Affichage monAffichage; 
 	private Route maRoute;
 	private CheckPoint monCheckPoint;
+	private Avancer threadAvancer;
 
 	
 	
+	public Avancer getThreadAvancer() {
+		return threadAvancer;
+	}
+
+	public void setThreadAvancer(Avancer threadAvancer) {
+		this.threadAvancer = threadAvancer;
+	}
+
 	public Controleur() {
 		
 	}

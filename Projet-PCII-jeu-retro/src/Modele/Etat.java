@@ -42,13 +42,13 @@ public class Etat {
 	private boolean LEFT ;
 	private boolean RIGHT ; 
 
-	//détermine quand apparaitra le prochain osbstacle
+	//d�termine quand apparaitra le prochain osbstacle
 	private int apparitionNext = 0;
 	
 	ArrayList<Obstacle> mesObstacles = new ArrayList<Obstacle>(); // Creation d'une liste d'obstacle
 	ArrayList<CheckPoint> mesCheckPoint= new ArrayList<CheckPoint>(); // Creation d'une liste de check point
 
-	private int decalageBackground;
+	private int decalageBackGround; 
 	
 	public Etat(Controleur monControleur) {
 		this.monControleur = monControleur; 
@@ -83,8 +83,6 @@ public class Etat {
 	    Obstacle newObstacle = new Obstacle(this.monControleur);
 		this.mesObstacles.add(newObstacle);
 		
-		this.decalageBackground = 0; 
-		
 	}
 	
 	public ArrayList<CheckPoint> getMesCheckPoint() {
@@ -95,19 +93,6 @@ public class Etat {
 	public void setMesCheckPoint(ArrayList<CheckPoint> mesCheckPoint) {
 		this.mesCheckPoint = mesCheckPoint;
 	}
-	
-
-	public void goUp() {
-		
-		if(UP) {
-			if((positionY - deplacement) > 0) {
-				
-				positionY -= deplacement;
-		
-			}
-		}		
-	}
-	
 	
 
 	//teste si la moto rentre en colision avec un checkPoint
@@ -123,7 +108,7 @@ public class Etat {
 				 this.setHorloge(20);
 				 this.mesCheckPoint.remove(cpt);
 				 
-			//Supprime le check point s'il sort de l'écran	 
+			//Supprime le check point s'il sort de l'�cran	 
 			 }else if(checkPointY + checkPointDimY >  monControleur.getMonAffichage().HAUT) {
 				 this.mesCheckPoint.remove(cpt);
 			 }
@@ -143,7 +128,7 @@ public class Etat {
 				 divideVitesse();
 				 this.mesObstacles.remove(cpt);
 				
-			 //Supprime le check point s'il sort de l'écran	 
+			 //Supprime le check point s'il sort de l'�cran	 
 			 }else if(obstacleY + obstacleDimX >  monControleur.getMonAffichage().HAUT) {
 			 this.mesObstacles.remove(cpt);
 
@@ -151,14 +136,23 @@ public class Etat {
 			 
 			 
 		 
-		}
+	}
+	public void goUp() {
+			
+		if(UP) {
+			if((positionY - deplacement) > 0) {
+				
+				positionY -= deplacement;
+			}
+		}		
+	}
+		
 	
 	public void goDown() {
 			
 		if(DOWN) {
 			if(positionY + deplacement < monControleur.getMonAffichage().HAUT) {
 				positionY += deplacement;
-				
 				
 			}
 		}		
@@ -168,14 +162,14 @@ public class Etat {
 	public void goLeft() {
 		if(LEFT) {
 			positionX -= deplacement;
-			decalageBackground -= 1; 
+			decalageBackGround -=1; 
 		}
 	}
 	
 	public void goRight() {
 		if(RIGHT) {
 			positionX += deplacement;
-			decalageBackground += 1; 
+			decalageBackGround += 1; 
 		}
 	}
 	
@@ -205,7 +199,7 @@ public class Etat {
 		//System.out.println("Fin du while");
 		//System.out.println("Valeur de i : "+ i);
 		
-		Point A = arraySelectionPoint.get(i-1); //Init du point antérieur à la HAUT
+		Point A = arraySelectionPoint.get(i-1); //Init du point ant�rieur � la HAUT
 		Point B = arraySelectionPoint.get(i);
 		
 		//System.out.println("A : "+ A);
@@ -291,7 +285,7 @@ public class Etat {
 		 
 		 
 		 
-		 //Création des check point
+		 //Cr�ation des check point
 		 if(cptDistance_CheckPoint >= 1000) 
 		 {
 			 cptDistance_CheckPoint = 0;
@@ -303,7 +297,7 @@ public class Etat {
 		 
 			Obstacle monObstacle = this.mesObstacles.get(this.mesObstacles.size()-1);
 			
-		 //Création des obstacle aléatiorement
+		 //Cr�ation des obstacle al�atiorement
 		if(monControleur.getMonEtat().getDistance() + monObstacle.getPosY()>= this.apparitionNext + this.getMonControleur().getMonAffichage().getHorizon()) 
 		 {
 			 Obstacle newObstacle = new Obstacle(this.monControleur);	
@@ -388,7 +382,7 @@ public class Etat {
 	}
 	
 	public int getDecalageBackground() {
-		return decalageBackground;
+		return decalageBackGround; 
 	}
 
 }

@@ -2,10 +2,9 @@ package Modele;
 
 import java.awt.Point;
 import java.util.ArrayList;
-
+import java.lang.Math; 
 import Controleur.Controleur;
 
-import java.lang.Math; 
 
 
 public class Route {
@@ -51,12 +50,11 @@ public class Route {
 			}
 			
 			
-			//Si le dernier point n'apppartient pas a la fenetre, on en créer un nouveau 
+			//Si le dernier point n'apppartient pas a la fenetre, on en cr�er un nouveau 
 			if(i==this.points.size()-1 && this.points.get(i).y + monControleur.getMonEtat().getDistance() >= monControleur.getMonAffichage().getHorizon()){
 				
 				
 				int x = this.monControleur.getMonAffichage().getRouteSUP_InterMin() + (int)(Math.random() * ((this.monControleur.getMonAffichage().getRouteSUP_InterMax() - this.monControleur.getMonAffichage().getRouteSUP_InterMin()) + 1));
-				//int x = this.monControleur.getMonAffichage().getRouteSUP_InterMin() + (int)(Math.random() * ((this.monControleur.getMonAffichage().getRouteSUP_InterMax() - this.monControleur.getMonAffichage().getRouteSUP_InterMin())+1));
 				int y =  points.get(points.size()-1).y - 160 ; 
 				
 				

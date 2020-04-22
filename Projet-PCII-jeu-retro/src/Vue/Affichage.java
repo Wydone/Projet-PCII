@@ -8,6 +8,7 @@ import Controleur.Controleur;
 import Modele.*;
 
 
+
 public class Affichage extends JPanel{
 	
 	private Controleur monControleur;
@@ -19,11 +20,11 @@ public class Affichage extends JPanel{
 	private boolean checkPointAffiche = false;
 	private CheckPoint checkPoint;
 	private int coefPerspective = 15;
-
+	private Sprite monSprite;
 
 	
-	private int dimensiontMotoLARG = 50;
-	private int dimensiontMotoHAUT = 50;
+	private int dimensiontMotoLARG = 80;
+	private int dimensiontMotoHAUT = 80;
 	private int positionMotoCentre = (int) (LARG/2) - (int)(dimensiontMotoLARG/2);
 	
 	
@@ -65,7 +66,8 @@ public class Affichage extends JPanel{
 	private int CheckPointD_InterMaxSUP = CheckPointD_InterMinSUP + (int)((CheckPointD_InterMaxINF- CheckPointD_InterMinINF) / coefPerspective); ;
 	
 
-	public Affichage(Controleur monControleur) {
+	public Affichage(Controleur monControleur, Sprite monSprite) {
+		this.monSprite = monSprite;
 		this.setPreferredSize(new Dimension (LARG,HAUT));
 		this.monControleur= monControleur;
 		this.monControleur.setMonAffichage(this);
@@ -91,15 +93,15 @@ public class Affichage extends JPanel{
 		
 		
 		
-	/*	g2d.drawLine(0, HAUT, CheckPointG_InterMinSUP, horizonY); // 
-			g2d.drawLine(CheckPointG_InterMaxINF, HAUT, CheckPointG_InterMaxSUP, horizonY); // 
-			
-			g2d.drawLine(CheckPointD_InterMinINF, HAUT,CheckPointD_InterMinSUP , horizonY); // 
-			g2d.drawLine(LARG, HAUT, CheckPointD_InterMaxSUP, horizonY); // 
-*/
+	//	g2d.drawLine(0, HAUT, CheckPointG_InterMinSUP, horizonY); // 
+	//	g2d.drawLine(CheckPointG_InterMaxINF, HAUT, CheckPointG_InterMaxSUP, horizonY); // 
 		
-		g2d.drawOval(monControleur.getMonEtat().getPositionX(), monControleur.getMonEtat().getPositionY(), dimensiontMotoLARG, dimensiontMotoHAUT);
+	//	g2d.drawLine(CheckPointD_InterMinINF, HAUT,CheckPointD_InterMinSUP , horizonY); // 
+	//	g2d.drawLine(LARG, HAUT, CheckPointD_InterMaxSUP, horizonY); // 
+
 		
+		//g2d.drawOval(monControleur.getMonEtat().getPositionX(), monControleur.getMonEtat().getPositionY(), dimensiontMotoLARG, dimensiontMotoHAUT);
+		this.monSprite.render(g2d, monControleur.getMonEtat().getPositionX(), monControleur.getMonEtat().getPositionY());
 		ArrayList<Point> list_point = this.monControleur.getMaRoute().getRoute();
 	 
 		for(int i = 0; i < list_point.size()-1; i++) {
@@ -111,22 +113,21 @@ public class Affichage extends JPanel{
 			//Modifie les virage en fonction de la perspective
 			int ecartInitPoint = this.monControleur.getMaRoute().getPosInitPoints(i);
 
-			if(ecartInitPoint >= 0 && (list_point.get(i).y+ monControleur.getMonEtat().getDistance() >= 900)) {
+				if(ecartInitPoint >= 0 && (list_point.get(i).y+ monControleur.getMonEtat().getDistance() >= 900)) {
 				int ecart_Final = map(ecartInitPoint, 0, (int) (LARG/2) - RouteSUP_InterMin, 0 ,(int) (LARG/2) - RouteINF_InterMin);
 				int ecart_current = map(list_point.get(i).y + monControleur.getMonEtat().getDistance(), horizonY, HAUT ,ecartInitPoint, ecart_Final);
 			 
-			/*	 System.out.println("horizonY : " + horizonY);
+		/*		 System.out.println("horizonY : " + horizonY);
 				 System.out.println("HAUT : " + HAUT);	 
 				 System.out.println("list_point.get(i).y : " + (list_point.get(i).y+ monControleur.getMonEtat().getDistance()));	 
 	
 				 
 				 System.out.println("ecartInitPoint : " + ecartInitPoint);
 				 System.out.println("ecart_current : " + ecart_current);	 
-				 System.out.println("ecart_Final : " + ecart_Final);	 */
+				 System.out.println("ecart_Final : " + ecart_Final);	*/ 
 				 
 				 Point pTransition = new Point((int)(LARG/2) - ecart_current,p.y); //
 				 list_point.set(i, pTransition);
-	
 			}
 
 			//Modifie la largeur de la route en fonction de la perspective
@@ -134,23 +135,12 @@ public class Affichage extends JPanel{
 			int perspectiveRoute2 = map(p2.y + monControleur.getMonEtat().getDistance(), horizonY, HAUT,largeur_routeMin ,largeur_routeMax); 
 		
 		 
-			 //Test perspective
-			float sinAngle = calculAnglePerspective(list_point.get(i) ,list_point.get(i+1)); 
-			//System.out.println("Sinus de l'angle : " + sinAngle);
-			//g.drawLine(list_point.get(i).x- perspectiveRoute1, (int)((list_point.get(i).y  + monControleur.getMonEtat().getDistance() )*sinAngle), list_point.get(i+1).x -perspectiveRoute2, (int)((list_point.get(i+1).y+monControleur.getMonEtat().getDistance() )*sinAngle ));
-			//ligne de droite 
-			//g.drawLine(  list_point.get(i).x +perspectiveRoute1, (int)( (list_point.get(i).y+ monControleur.getMonEtat().getDistance())*sinAngle), list_point.get(i+1).x+perspectiveRoute2, (int)((list_point.get(i+1).y+monControleur.getMonEtat().getDistance()) *sinAngle ));
-			
-			
-			//perspective
-			g.drawLine(list_point.get(i).x- perspectiveRoute1, (int)((list_point.get(i).y  + monControleur.getMonEtat().getDistance() )), list_point.get(i+1).x -perspectiveRoute2, (int)((list_point.get(i+1).y+monControleur.getMonEtat().getDistance() ) ));
+			//ligne de gauche 
+			g.drawLine(list_point.get(i).x- perspectiveRoute1, list_point.get(i).y  + monControleur.getMonEtat().getDistance(), list_point.get(i+1).x -perspectiveRoute2, list_point.get(i+1).y+monControleur.getMonEtat().getDistance());
 
 			//ligne de droite 
-			g.drawLine(  list_point.get(i).x +perspectiveRoute1, (int)( (list_point.get(i).y+ monControleur.getMonEtat().getDistance())), list_point.get(i+1).x+perspectiveRoute2, (int)((list_point.get(i+1).y+monControleur.getMonEtat().getDistance())  ));
-			
-			
-			//ligne central
-			g.drawLine(  list_point.get(i).x,  list_point.get(i).y+ monControleur.getMonEtat().getDistance(), list_point.get(i+1).x, list_point.get(i+1).y+monControleur.getMonEtat().getDistance());
+			g.drawLine(list_point.get(i).x +perspectiveRoute1,  list_point.get(i).y+ monControleur.getMonEtat().getDistance(), list_point.get(i+1).x+perspectiveRoute2, list_point.get(i+1).y+monControleur.getMonEtat().getDistance());
+			//g.drawLine(  list_point.get(i).x,  list_point.get(i).y+ monControleur.getMonEtat().getDistance(), list_point.get(i+1).x, list_point.get(i+1).y+monControleur.getMonEtat().getDistance());
 
 		}
    	 
@@ -160,9 +150,11 @@ public class Affichage extends JPanel{
 	    	this.checkPoint = newCheckPoint;
 	    	checkPointExist=true;
 	    	checkPointAffiche=true;
-	
+
+
 	    }
     
+	    
 	    ArrayList<CheckPoint> mesCheckPoints = new ArrayList<CheckPoint>();
 	    mesCheckPoints = this.monControleur.getMonEtat().getMesCheckPoint();
 	   	
@@ -170,11 +162,16 @@ public class Affichage extends JPanel{
 	    for(int cpt = 0; cpt < mesCheckPoints.size(); cpt++) {
 			
 	    	CheckPoint monCheckPoint = mesCheckPoints.get(cpt);	
-			
+	    	
+	    	//int descentePerspective =  map(monCheckPoint.getPosY() + monControleur.getMonEtat().getDistance(), horizonY, HAUT, monControleur.getThreadAvancer().getActualisation()-1,0);
+			//int descentePerspective =  9;
+	    	//monCheckPoint.setValeurDescente(descentePerspective);
+			//monCheckPoint.setPosY(monCheckPoint.getPosY() - descentePerspective);
+	    	int checkPointY = monCheckPoint.getPosY() + monControleur.getMonEtat().getDistance();
+
 	    	//calcul de la dimensions des check points en fonction de la perspective
 	    	int perspectiveCheckPointX = map(monCheckPoint.getPosY() + monControleur.getMonEtat().getDistance(), horizonY, HAUT,(int)(monCheckPoint.getDimensionXMax()/coefPerspective) ,monCheckPoint.getDimensionXMax()); 
 	    	int perspectiveCheckPointY = map(monCheckPoint.getPosY() + monControleur.getMonEtat().getDistance(), horizonY, HAUT,(int)(monCheckPoint.getDimensionYMax()/coefPerspective) ,monCheckPoint.getDimensionYMax()); 
-	    	int checkPointY =monCheckPoint.getPosY() + monControleur.getMonEtat().getDistance();
 			
 			int d = 0;
 			int posFinal = 0;
@@ -194,31 +191,41 @@ public class Affichage extends JPanel{
 				d_current = map(monCheckPoint.getPosY() + monControleur.getMonEtat().getDistance(), horizonY, HAUT, 0  ,distaceInitialFinal);
 				d=-d_current;	
 			}
+
+		
 			
-			System.out.println("");
-			
-			monCheckPoint.setDimensionX(perspectiveCheckPointX);
+			// System.out.println("\nActualisation " + descentePerspective);
+			// System.out.println("obstacleY " + checkPointY);
 			monCheckPoint.setDimensionY(perspectiveCheckPointY);
+			monCheckPoint.setDimensionX(perspectiveCheckPointX);
+
 			monCheckPoint.setPosX(monCheckPoint.getPosXInitiale() + d);
 
-			g2d.drawRect (monCheckPoint.getPosX(),checkPointY , perspectiveCheckPointX,  perspectiveCheckPointY);  
+			g2d.drawRect (monCheckPoint.getPosX(),checkPointY, perspectiveCheckPointX,  perspectiveCheckPointY);  
 			this.monControleur.getMonEtat().collision_motoCheckPoint(cpt, monCheckPoint.getPosX(),checkPointY, monCheckPoint.getDimensionX() , monCheckPoint.getDimensionY());
 
 	    }
 
-		ArrayList<Obstacle> mesObstacles = new ArrayList<Obstacle>();
+	ArrayList<Obstacle> mesObstacles = new ArrayList<Obstacle>();
 		mesObstacles = this.monControleur.getMonEtat().getMesObstacles();
 		
 	   	//Affiche tous les obstacles
 		for(int cpt = 0; cpt < mesObstacles.size(); cpt++) {
 			
+
+			
 			Obstacle monObstacle = mesObstacles.get(cpt);
+			
+	  //  	int descentePerspective =  map(monObstacle.getPosY() + monControleur.getMonEtat().getDistance(), horizonY, HAUT, monControleur.getThreadAvancer().getActualisation()-1,0);
+	//		monObstacle.setPosY(monObstacle.getPosY() - descentePerspective);
 				
 			//calcul de la dimensions des check points en fonction de la perspective
 			int perspectiveObstacleX = map(monObstacle.getPosY() + monControleur.getMonEtat().getDistance(), horizonY, HAUT,(int)(monObstacle.getDimensionXMax()/coefPerspective) ,monObstacle.getDimensionXMax()); 
-			int perspectiveObstacleY = map(monObstacle.getPosY() + monControleur.getMonEtat().getDistance(), horizonY, HAUT,(int)(monObstacle.getDimensionYMax()/coefPerspective) , monObstacle.getDimensionYMax()); 
+			int perspectiveObstacleY = map(monObstacle.getPosY() + monControleur.getMonEtat().getDistance(), horizonY, HAUT,(int)(monObstacle.getDimensionYMax()/coefPerspective) , monObstacle.getDimensionYMax());
+
 			int obstacleY =monObstacle.getPosY() + monControleur.getMonEtat().getDistance();
-			
+	
+
 			int d = 0;
 			int posFinal = 0;
 			int d_current = 0;
@@ -238,12 +245,13 @@ public class Affichage extends JPanel{
 				d=-d_current;	
 			}
 
+
 			monObstacle.setDimensionX(perspectiveObstacleX);
 			monObstacle.setDimensionY(perspectiveObstacleY);
 			monObstacle.setPosX(monObstacle.getPosXInitiale() + d);
 
 
-			g2d.drawRect (monObstacle.getPosX(),obstacleY , perspectiveObstacleX,  perspectiveObstacleY); 
+			g2d.drawRect (monObstacle.getPosX(),obstacleY, perspectiveObstacleX,  perspectiveObstacleY); 
 			g2d.setColor(new Color(0, 0, 0));
 			g2d.fillRect(monObstacle.getPosX(), obstacleY, perspectiveObstacleX, perspectiveObstacleY);
 			this.monControleur.getMonEtat().collision_motoObstacle(cpt, monObstacle.getPosX(), obstacleY, monObstacle.getDimensionX() , monObstacle.getDimensionY());
@@ -286,25 +294,23 @@ public class Affichage extends JPanel{
 	  		g2d.drawString("YOUR SCORE IS : " + monControleur.getMonEtat().getDistance(), LARG/2 - 230, HAUT/2 + 100); 
 	  		
   		}
-     
+  
      	int decalage = monControleur.getMonEtat().getDecalageBackground(); 
-	  //Section de dessin du decors
-     	g2d.drawLine(-100+decalage,80, 0+decalage,190);
-     	
-	 	g2d.drawLine(0+decalage,190, 120+decalage,50);
-	 	g2d.drawLine(120+decalage,50 , 230+decalage,180);
-	 	
-	 	g2d.drawLine(230+decalage,180 , 420+decalage,100);
-	 	g2d.drawLine(420+decalage,100 , 630+decalage,180);
-			
-	 	g2d.drawLine(610+decalage, 195, 800+decalage, 70);
-	 	
-	 	g2d.drawLine(575+decalage, 160, 640+decalage, 110);
-	 	g2d.drawLine(640+decalage, 110, 690+decalage, 145); 
-	 	
-	 	g2d.drawLine(800+decalage, 70, 950+decalage, 150); 
-
-	 	
+     	//Section de dessin du decors
+       	g2d.drawLine(-100+decalage,80, 0+decalage,190);
+       	
+  	 	g2d.drawLine(0+decalage,190, 120+decalage,50);
+  	 	g2d.drawLine(120+decalage,50 , 230+decalage,180);
+  	 	
+  	 	g2d.drawLine(230+decalage,180 , 420+decalage,100);
+  	 	g2d.drawLine(420+decalage,100 , 630+decalage,180);
+  			
+  	 	g2d.drawLine(610+decalage, 195, 800+decalage, 70);
+  	 	
+  	 	g2d.drawLine(575+decalage, 160, 640+decalage, 110);
+  	 	g2d.drawLine(640+decalage, 110, 690+decalage, 145); 
+  	 	
+  	 	g2d.drawLine(800+decalage, 70, 950+decalage, 150); 
 		
 		
 	}
@@ -323,19 +329,6 @@ public class Affichage extends JPanel{
 	public int map(int x, int in_min, int in_max, int out_min, int out_max) {
 		
 		return (((x-in_min)* (out_max - out_min)) / (in_max - in_min))  + out_min ; 
-	}
-	
-	public float calculAnglePerspective(Point A, Point B) {//Return le sinus de langle
-		
-		//calcul du triangle 
-		float op = A.y - B.y ;
-		float adj = B.x - A.x; 
-		float hyp = (float) Math.sqrt((op*op)+(adj*adj)); 
-		
-		float sinusAngle = (op/hyp) ; 
-		
-		
-		return sinusAngle ;
 	}
 	
 	

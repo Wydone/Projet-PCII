@@ -13,7 +13,17 @@ public class CheckPoint {
 	
 	private int dimensionXMax = 80;
 	private int dimensionYMax = 40;
+	private int valeurDescente = 0;
+
 	
+	public int getValeurDescente() {
+		return valeurDescente;
+	}
+
+	public void setValeurDescente(int valeurDescente) {
+		this.valeurDescente += valeurDescente;
+	}
+
 	private Controleur monControleur;
 	
 	public int getDimensionXMax() {

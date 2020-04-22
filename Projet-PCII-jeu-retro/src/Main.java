@@ -1,11 +1,8 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
-
 import Controleur.Avancer;
 import Controleur.Controleur;
 import Controleur.Repaint;
@@ -14,15 +11,12 @@ import Modele.Route;
 import Vue.Affichage;
 //import sun.audio.AudioPlayer;
 //import sun.audio.AudioStream;
-//import sun.audio.*;
-
-
-
+import Modele.Sprite;
 
 public class Main {
 	
 	
-	/*
+	
 	public static void playMusic(String filepath)
 	{
 		
@@ -30,8 +24,8 @@ public class Main {
 		try {
 			
 			music = new FileInputStream (new File(filepath));
-			AudioStream audios = new AudioStream(music);
-			AudioPlayer.player.start(audios);
+		//	AudioStream audios = new AudioStream(music);
+		//	AudioPlayer.player.start(audios);
 			
 		}catch(Exception e) {
 			
@@ -39,14 +33,14 @@ public class Main {
 		}
 		
 		
-	}*/
+	}
 	
 	public static void main(String [] args) {
 
+		Sprite monSprite = new Sprite();
+		
 		Controleur c = new Controleur();
-		
-		
-		Affichage view = new Affichage(c);
+		Affichage view = new Affichage(c, monSprite);
 		Etat e = new Etat(c);
 		Route r = new Route(c);
 		Repaint t =  new Repaint(c); 
@@ -56,6 +50,9 @@ public class Main {
 		
 		//playMusic("Musique/alt-236-soundtracks-blue-books.wav");
 		
+
+		
+		
 		Avancer a = new Avancer(c); 
 		new Thread(a).start();
 		
@@ -63,14 +60,10 @@ public class Main {
 		fenetre.addKeyListener(c);
 		fenetre.add(view);
 		fenetre.pack();
-		fenetre.setVisible(true);
-		
+		fenetre.setVisible(true);		
 		
 		
 		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }
-
-
-	
 
