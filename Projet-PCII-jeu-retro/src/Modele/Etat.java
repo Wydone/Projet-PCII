@@ -48,7 +48,7 @@ public class Etat {
 	ArrayList<Obstacle> mesObstacles = new ArrayList<Obstacle>(); // Creation d'une liste d'obstacle
 	ArrayList<CheckPoint> mesCheckPoint= new ArrayList<CheckPoint>(); // Creation d'une liste de check point
 
-	
+	private int decalageBackground;
 	
 	public Etat(Controleur monControleur) {
 		this.monControleur = monControleur; 
@@ -82,6 +82,8 @@ public class Etat {
 
 	    Obstacle newObstacle = new Obstacle(this.monControleur);
 		this.mesObstacles.add(newObstacle);
+		
+		this.decalageBackground = 0; 
 		
 	}
 	
@@ -157,6 +159,7 @@ public class Etat {
 			if(positionY + deplacement < monControleur.getMonAffichage().HAUT) {
 				positionY += deplacement;
 				
+				
 			}
 		}		
 	}
@@ -165,12 +168,14 @@ public class Etat {
 	public void goLeft() {
 		if(LEFT) {
 			positionX -= deplacement;
+			decalageBackground -= 1; 
 		}
 	}
 	
 	public void goRight() {
 		if(RIGHT) {
 			positionX += deplacement;
+			decalageBackground += 1; 
 		}
 	}
 	
@@ -380,6 +385,10 @@ public class Etat {
 
 	public void setApparitionNext(int apparitionNext) {
 		this.apparitionNext = apparitionNext;
+	}
+	
+	public int getDecalageBackground() {
+		return decalageBackground;
 	}
 
 }

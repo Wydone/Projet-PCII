@@ -134,11 +134,22 @@ public class Affichage extends JPanel{
 			int perspectiveRoute2 = map(p2.y + monControleur.getMonEtat().getDistance(), horizonY, HAUT,largeur_routeMin ,largeur_routeMax); 
 		
 		 
-			//ligne de gauche 
-			g.drawLine(list_point.get(i).x- perspectiveRoute1, list_point.get(i).y  + monControleur.getMonEtat().getDistance(), list_point.get(i+1).x -perspectiveRoute2, list_point.get(i+1).y+monControleur.getMonEtat().getDistance());
+			 //Test perspective
+			float sinAngle = calculAnglePerspective(list_point.get(i) ,list_point.get(i+1)); 
+			//System.out.println("Sinus de l'angle : " + sinAngle);
+			//g.drawLine(list_point.get(i).x- perspectiveRoute1, (int)((list_point.get(i).y  + monControleur.getMonEtat().getDistance() )*sinAngle), list_point.get(i+1).x -perspectiveRoute2, (int)((list_point.get(i+1).y+monControleur.getMonEtat().getDistance() )*sinAngle ));
+			//ligne de droite 
+			//g.drawLine(  list_point.get(i).x +perspectiveRoute1, (int)( (list_point.get(i).y+ monControleur.getMonEtat().getDistance())*sinAngle), list_point.get(i+1).x+perspectiveRoute2, (int)((list_point.get(i+1).y+monControleur.getMonEtat().getDistance()) *sinAngle ));
+			
+			
+			//perspective
+			g.drawLine(list_point.get(i).x- perspectiveRoute1, (int)((list_point.get(i).y  + monControleur.getMonEtat().getDistance() )), list_point.get(i+1).x -perspectiveRoute2, (int)((list_point.get(i+1).y+monControleur.getMonEtat().getDistance() ) ));
 
 			//ligne de droite 
-			g.drawLine(  list_point.get(i).x +perspectiveRoute1,  list_point.get(i).y+ monControleur.getMonEtat().getDistance(), list_point.get(i+1).x+perspectiveRoute2, list_point.get(i+1).y+monControleur.getMonEtat().getDistance());
+			g.drawLine(  list_point.get(i).x +perspectiveRoute1, (int)( (list_point.get(i).y+ monControleur.getMonEtat().getDistance())), list_point.get(i+1).x+perspectiveRoute2, (int)((list_point.get(i+1).y+monControleur.getMonEtat().getDistance())  ));
+			
+			
+			//ligne central
 			g.drawLine(  list_point.get(i).x,  list_point.get(i).y+ monControleur.getMonEtat().getDistance(), list_point.get(i+1).x, list_point.get(i+1).y+monControleur.getMonEtat().getDistance());
 
 		}
@@ -183,7 +194,9 @@ public class Affichage extends JPanel{
 				d_current = map(monCheckPoint.getPosY() + monControleur.getMonEtat().getDistance(), horizonY, HAUT, 0  ,distaceInitialFinal);
 				d=-d_current;	
 			}
-
+			
+			System.out.println("");
+			
 			monCheckPoint.setDimensionX(perspectiveCheckPointX);
 			monCheckPoint.setDimensionY(perspectiveCheckPointY);
 			monCheckPoint.setPosX(monCheckPoint.getPosXInitiale() + d);
@@ -274,18 +287,24 @@ public class Affichage extends JPanel{
 	  		
   		}
      
+     	int decalage = monControleur.getMonEtat().getDecalageBackground(); 
 	  //Section de dessin du decors
-	 	g2d.drawLine(0,190, 120,50);
-	 	g2d.drawLine(120,50 , 230,180);
+     	g2d.drawLine(-100+decalage,80, 0+decalage,190);
+     	
+	 	g2d.drawLine(0+decalage,190, 120+decalage,50);
+	 	g2d.drawLine(120+decalage,50 , 230+decalage,180);
 	 	
-	 	g2d.drawLine(230,180 , 420,100);
-	 	g2d.drawLine(420,100 , 630,180);
+	 	g2d.drawLine(230+decalage,180 , 420+decalage,100);
+	 	g2d.drawLine(420+decalage,100 , 630+decalage,180);
 			
-	 	g2d.drawLine(610, 195, 800, 70);
+	 	g2d.drawLine(610+decalage, 195, 800+decalage, 70);
 	 	
-	 	g2d.drawLine(575, 160, 640, 110);
-	 	g2d.drawLine(640, 110, 690, 145); 
+	 	g2d.drawLine(575+decalage, 160, 640+decalage, 110);
+	 	g2d.drawLine(640+decalage, 110, 690+decalage, 145); 
+	 	
+	 	g2d.drawLine(800+decalage, 70, 950+decalage, 150); 
 
+	 	
 		
 		
 	}
@@ -304,6 +323,19 @@ public class Affichage extends JPanel{
 	public int map(int x, int in_min, int in_max, int out_min, int out_max) {
 		
 		return (((x-in_min)* (out_max - out_min)) / (in_max - in_min))  + out_min ; 
+	}
+	
+	public float calculAnglePerspective(Point A, Point B) {//Return le sinus de langle
+		
+		//calcul du triangle 
+		float op = A.y - B.y ;
+		float adj = B.x - A.x; 
+		float hyp = (float) Math.sqrt((op*op)+(adj*adj)); 
+		
+		float sinusAngle = (op/hyp) ; 
+		
+		
+		return sinusAngle ;
 	}
 	
 	
