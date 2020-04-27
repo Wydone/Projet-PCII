@@ -53,9 +53,10 @@ public class Route {
 			//Si le dernier point n'apppartient pas a la fenetre, on en cr�er un nouveau 
 			if(i==this.points.size()-1 && this.points.get(i).y + monControleur.getMonEtat().getDistance() >= monControleur.getMonAffichage().getHorizon()){
 				
-				
 				int x = this.monControleur.getMonAffichage().getRouteSUP_InterMin() + (int)(Math.random() * ((this.monControleur.getMonAffichage().getRouteSUP_InterMax() - this.monControleur.getMonAffichage().getRouteSUP_InterMin()) + 1));
 				int y =  points.get(points.size()-1).y - 160 ; 
+				
+				System.out.println("A random : " + x );
 				
 				
 				Point pointOut = new Point(x,y);

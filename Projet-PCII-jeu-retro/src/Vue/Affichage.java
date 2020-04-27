@@ -30,7 +30,7 @@ public class Affichage extends JPanel{
 	
 	private int cpt; //compteur de temps
 	
-	private int borneMaxoute = 80;
+	private int borneMaxoute = 100;
 	
 	//Largeur de la route en haut et en bas de l'ecran
 	private int largeur_routeMax = 50;
@@ -42,8 +42,8 @@ public class Affichage extends JPanel{
 	private int RouteINF_InterMax = (int) (LARG/2) + borneMaxoute;
 	
 	//Borne a en haut de l'�cran d'apparition de la route
-	private int RouteSUP_InterMin = (int) (LARG/2) - (int)(borneMaxoute/coefPerspective);
-	private int RouteSUP_InterMax = (int) (LARG/2) + (int)(borneMaxoute/coefPerspective);
+	private int RouteSUP_InterMin = (int) (LARG/2) - (int)(borneMaxoute+coefPerspective);
+	private int RouteSUP_InterMax = (int) (LARG/2) + (int)(borneMaxoute+coefPerspective);
 	
 	
 	//Borne a au bas de l'�cran d'apparition des checkpoints a Gauche
@@ -278,10 +278,13 @@ public class Affichage extends JPanel{
      	//SECTION DE PANEL DU DEBUT
      
 	    if(!monControleur.getMonEtat().getStart()) {
-	    	Font myFont = new Font ("Courier New", 1, 40);
+	    	Font myFont = new Font ("Courier New", 1, 30);
 	    	g2d.setFont(myFont);
 		  	g2d.setColor(new Color(0, 0, 0));
-		  	g2d.drawString("PRESS 'SPACE' TO START", LARG/2 - 280, HAUT/2 + 60); 
+		  	g2d.drawString("GO AS FAR AS YOU CAN WHILE TAKING", LARG/2 - 320, HAUT/2 - 75);
+		  	g2d.drawString("CHECKPOINTS TO GAIN MORE TIME !", LARG/2 - 300, HAUT/2 - 50);
+		  	myFont = new Font ("Courier New", 1, 40);
+		  	g2d.drawString("PRESS 'SPACE' TO START", LARG/2 - 200, HAUT/2 + 120); 
 	    }
      
      	// Section de dessin du panel de FIN

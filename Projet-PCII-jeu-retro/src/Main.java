@@ -1,6 +1,10 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import Controleur.Avancer;
@@ -9,8 +13,7 @@ import Controleur.Repaint;
 import Modele.Etat;
 import Modele.Route;
 import Vue.Affichage;
-//import sun.audio.AudioPlayer;
-//import sun.audio.AudioStream;
+
 import Modele.Sprite;
 
 public class Main {
@@ -20,16 +23,24 @@ public class Main {
 	public static void playMusic(String filepath)
 	{
 		
-		InputStream music;
+		//InputStream music;
+		File music = new File(filepath);
 		try {
 			
-			music = new FileInputStream (new File(filepath));
-		//	AudioStream audios = new AudioStream(music);
-		//	AudioPlayer.player.start(audios);
+			/*music = new FileInputStream (new File(filepath));
+			AudioStream audios = new AudioStream(music);
+			AudioPlayer.player.start(audios);*/
+			
+			AudioInputStream audioIn = AudioSystem.getAudioInputStream(music); 
+			Clip clip = AudioSystem.getClip(); 
+			clip.open(audioIn);
+			clip.start();
+			
+			
 			
 		}catch(Exception e) {
 			
-			JOptionPane.showMessageDialog(null,"Error");
+			System.out.println(e);
 		}
 		
 		
@@ -48,7 +59,7 @@ public class Main {
 
 		view.addKeyListener(c);
 		
-		//playMusic("Musique/alt-236-soundtracks-blue-books.wav");
+		playMusic("Musique/alt-236-soundtracks-blue-books.wav");
 		
 
 		
