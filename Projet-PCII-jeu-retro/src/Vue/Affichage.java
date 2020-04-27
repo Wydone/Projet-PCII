@@ -13,20 +13,18 @@ public class Affichage extends JPanel{
 	
 	private Controleur monControleur;
 
-	public static final int LARG = 800;
-	public static final int HAUT = 600;
-	private int horizonY = (int)(HAUT/3);
-	private boolean checkPointExist = false;
-	private boolean checkPointAffiche = false;
-	private CheckPoint checkPoint;
-	private int coefPerspective = 15;
-	private Sprite monSprite;
-
-	
-	private int dimensiontMotoLARG = 80;
+	public static final int LARG = 800; //Largeur de la fenetre 
+	public static final int HAUT = 600; //Hauteur de la fenetre 
+	private int horizonY = (int)(HAUT/3); // hauter de l'horizon 
+	private boolean checkPointExist = false; // Si un checkpoint est dans le canvas
+	private boolean checkPointAffiche = false; // si on affiche le checkpoint
+	private CheckPoint checkPoint; 
+	private int coefPerspective = 15;//perspective et coefficient utilisé pour la vue "penchée"
+	private Sprite monSprite; //sprite de la moto
+	private int dimensiontMotoLARG = 80; //dimension de la moto
 	private int dimensiontMotoHAUT = 80;
-	private int positionMotoCentre = (int) (LARG/2) - (int)(dimensiontMotoLARG/2);
 	
+	private int positionMotoCentre = (int) (LARG/2) - (int)(dimensiontMotoLARG/2); //position initiale de la moto
 	
 	private int cpt; //compteur de temps
 	
@@ -55,8 +53,6 @@ public class Affichage extends JPanel{
 	private int CheckPointG_InterMinSUP = CheckPointG_InterMaxSUP - (int)((CheckPointG_InterMaxINF- CheckPointG_InterMinINF) / coefPerspective);
 	
 	
-	
-	
 	//Borne au bas de l'�cran d'apparition des checkpoints a Droite
 	private int CheckPointD_InterMinINF =  RouteINF_InterMax + largeur_routeMax;
 	private int CheckPointD_InterMaxINF = LARG;
@@ -66,6 +62,11 @@ public class Affichage extends JPanel{
 	private int CheckPointD_InterMaxSUP = CheckPointD_InterMinSUP + (int)((CheckPointD_InterMaxINF- CheckPointD_InterMinINF) / coefPerspective); ;
 	
 
+	/*
+	 * CONSTRUCTEUR de classe
+	 * 
+	 * @param Controleur, Sprite
+	 */
 	public Affichage(Controleur monControleur, Sprite monSprite) {
 		this.monSprite = monSprite;
 		this.setPreferredSize(new Dimension (LARG,HAUT));
@@ -77,32 +78,28 @@ public class Affichage extends JPanel{
 		this.cpt = 0; 
 	}
 	
-
+	/*
+	 * Methode qui va permettre de tout afficher sur le Canvas
+	 * @param Graphics g
+	 */
 	@Override
 	public void paint(Graphics g) {
 		
+		//Start l'horloge
 		if(monControleur.getMonEtat().getStart()) {
 			cpt ++; 
 		}
 		
-		
+		//Initilisation des différents element
 		Graphics2D g2d = (Graphics2D) g;
-		g2d.clearRect(0,0,LARG,HAUT);
+		g2d.clearRect(0,0,LARG,HAUT);//clean le Canvas pour ensuite redessiner par dessus
 
-		g2d.drawLine(0, horizonY, LARG, horizonY); //Horizon 
+		g2d.drawLine(0, horizonY, LARG, horizonY); //Draw la ligne d'horizon
 		
 		
+		this.monSprite.render(g2d, monControleur.getMonEtat().getPositionX(), monControleur.getMonEtat().getPositionY()); //Dessiner l'image du Sprite de la moto
 		
-	//	g2d.drawLine(0, HAUT, CheckPointG_InterMinSUP, horizonY); // 
-	//	g2d.drawLine(CheckPointG_InterMaxINF, HAUT, CheckPointG_InterMaxSUP, horizonY); // 
-		
-	//	g2d.drawLine(CheckPointD_InterMinINF, HAUT,CheckPointD_InterMinSUP , horizonY); // 
-	//	g2d.drawLine(LARG, HAUT, CheckPointD_InterMaxSUP, horizonY); // 
-
-		
-		//g2d.drawOval(monControleur.getMonEtat().getPositionX(), monControleur.getMonEtat().getPositionY(), dimensiontMotoLARG, dimensiontMotoHAUT);
-		this.monSprite.render(g2d, monControleur.getMonEtat().getPositionX(), monControleur.getMonEtat().getPositionY());
-		ArrayList<Point> list_point = this.monControleur.getMaRoute().getRoute();
+		ArrayList<Point> list_point = this.monControleur.getMaRoute().getRoute(); //Recupperer l'arryList des point aleatoire de la route
 	 
 		for(int i = 0; i < list_point.size()-1; i++) {
    		 
@@ -130,7 +127,7 @@ public class Affichage extends JPanel{
 				 list_point.set(i, pTransition);
 			}
 
-			//Modifie la largeur de la route en fonction de la perspective
+			//Modifie la largeur de la route en fonction de la perspective utilisant la fonction map qui permet de faire une echele de profondeur pour obtenir l'effet de perspective
 			int perspectiveRoute1 = map(p.y + monControleur.getMonEtat().getDistance(), horizonY, HAUT,largeur_routeMin ,largeur_routeMax); 
 			int perspectiveRoute2 = map(p2.y + monControleur.getMonEtat().getDistance(), horizonY, HAUT,largeur_routeMin ,largeur_routeMax); 
 		
@@ -144,17 +141,15 @@ public class Affichage extends JPanel{
 
 		}
    	 
-   	 
+   	 	//Dessiner les checkpoints 
 	    if(!checkPointExist) {
 	    	CheckPoint newCheckPoint = new CheckPoint(this.monControleur);
 	    	this.checkPoint = newCheckPoint;
 	    	checkPointExist=true;
 	    	checkPointAffiche=true;
-
-
 	    }
     
-	    
+	    //ArrayList des checkpoints 
 	    ArrayList<CheckPoint> mesCheckPoints = new ArrayList<CheckPoint>();
 	    mesCheckPoints = this.monControleur.getMonEtat().getMesCheckPoint();
 	   	
@@ -206,26 +201,21 @@ public class Affichage extends JPanel{
 
 	    }
 
-	ArrayList<Obstacle> mesObstacles = new ArrayList<Obstacle>();
+	    //ArrayList des obstacles
+	    ArrayList<Obstacle> mesObstacles = new ArrayList<Obstacle>();
 		mesObstacles = this.monControleur.getMonEtat().getMesObstacles();
 		
 	   	//Affiche tous les obstacles
 		for(int cpt = 0; cpt < mesObstacles.size(); cpt++) {
 			
-
-			
 			Obstacle monObstacle = mesObstacles.get(cpt);
 			
-	  //  	int descentePerspective =  map(monObstacle.getPosY() + monControleur.getMonEtat().getDistance(), horizonY, HAUT, monControleur.getThreadAvancer().getActualisation()-1,0);
-	//		monObstacle.setPosY(monObstacle.getPosY() - descentePerspective);
-				
 			//calcul de la dimensions des check points en fonction de la perspective
 			int perspectiveObstacleX = map(monObstacle.getPosY() + monControleur.getMonEtat().getDistance(), horizonY, HAUT,(int)(monObstacle.getDimensionXMax()/coefPerspective) ,monObstacle.getDimensionXMax()); 
 			int perspectiveObstacleY = map(monObstacle.getPosY() + monControleur.getMonEtat().getDistance(), horizonY, HAUT,(int)(monObstacle.getDimensionYMax()/coefPerspective) , monObstacle.getDimensionYMax());
 
 			int obstacleY =monObstacle.getPosY() + monControleur.getMonEtat().getDistance();
 	
-
 			int d = 0;
 			int posFinal = 0;
 			int d_current = 0;
@@ -245,22 +235,23 @@ public class Affichage extends JPanel{
 				d=-d_current;	
 			}
 
-
 			monObstacle.setDimensionX(perspectiveObstacleX);
 			monObstacle.setDimensionY(perspectiveObstacleY);
 			monObstacle.setPosX(monObstacle.getPosXInitiale() + d);
 
 
 			g2d.drawRect (monObstacle.getPosX(),obstacleY, perspectiveObstacleX,  perspectiveObstacleY); 
-			g2d.setColor(new Color(0, 0, 0));
+			g2d.setColor(new Color(0, 0, 0)); // Dessiner des rectangle noir pour les obstacles
 			g2d.fillRect(monObstacle.getPosX(), obstacleY, perspectiveObstacleX, perspectiveObstacleY);
 			this.monControleur.getMonEtat().collision_motoObstacle(cpt, monObstacle.getPosX(), obstacleY, monObstacle.getDimensionX() , monObstacle.getDimensionY());
 
 		}
-  
+		
+		//Dessiner la background en blanc au dessus de la ligne d'horizon
 	   	g2d.setColor(new Color(255, 255, 255));
 	    g2d.fillRect(0, 0, LARG, horizonY);
 	     
+	    //Différents affichage de vitesse, score et Temps restants
 	 	g2d.setColor(new Color(0, 0, 0));
 	    g2d.drawString("Vitesse : " +(int) monControleur.getMonEtat().getVitesse() + " km/h", 20, 20); 
 	
@@ -269,14 +260,13 @@ public class Affichage extends JPanel{
 	    g2d.drawString("Temps restant : " + this.monControleur.getMonEtat().getHorloge(), LARG -150, HAUT -50); 
 	     
      
-	    //chrono
+	    //Si le compteur est égal à 24 alors on arctualise l'horloge car on repaint tout les 1000/24 miliseconde
 	    if (cpt == 24) {
 	    	this.monControleur.getMonEtat().actualiserHorloge(); 
 	    	cpt = 0; 
 	    }
      
-     	//SECTION DE PANEL DU DEBUT
-     
+     	//SECTION DE L'ECRAN DE DEBUT
 	    if(!monControleur.getMonEtat().getStart()) {
 	    	Font myFont = new Font ("Courier New", 1, 30);
 	    	g2d.setFont(myFont);
@@ -297,7 +287,8 @@ public class Affichage extends JPanel{
 	  		g2d.drawString("YOUR SCORE IS : " + monControleur.getMonEtat().getDistance(), LARG/2 - 230, HAUT/2 + 100); 
 	  		
   		}
-  
+     	
+     	//DESSIN DU BACKGROUND EN FAISANT DES TRAITS POUR DESSINER DES MONTAGES 
      	int decalage = monControleur.getMonEtat().getDecalageBackground(); 
      	//Section de dessin du decors
        	g2d.drawLine(-100+decalage,80, 0+decalage,190);
@@ -318,6 +309,22 @@ public class Affichage extends JPanel{
 		
 	}
 	
+	/*
+	 * Methode qui permet en fonction de 2 points et d'une echelle de retourner la ouvelle valeur proportionnel à cette echelle
+	 * 
+	 * @param int x, int in_min, int in_max, int out_min, int out_max
+	 * @return int new_x_a_echelle
+	 */
+	public int map(int x, int in_min, int in_max, int out_min, int out_max) {
+		
+		return (((x-in_min)* (out_max - out_min)) / (in_max - in_min))  + out_min ; 
+	}
+	
+	
+	//---------------------------------------------------------------------------------
+	// GETTERS & SETTERS
+	//---------------------------------------------------------------------------------
+	
 	
 	public boolean isCheckPointExist() {
 		return checkPointExist;
@@ -327,14 +334,6 @@ public class Affichage extends JPanel{
 	public void setCheckPointExist(boolean checkPointExist) {
 		this.checkPointExist = checkPointExist;
 	}
-
-
-	public int map(int x, int in_min, int in_max, int out_min, int out_max) {
-		
-		return (((x-in_min)* (out_max - out_min)) / (in_max - in_min))  + out_min ; 
-	}
-	
-	
 	
 	public Controleur getMonControleur() {
 		return monControleur;

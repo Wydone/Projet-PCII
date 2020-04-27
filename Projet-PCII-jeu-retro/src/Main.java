@@ -18,63 +18,58 @@ import Modele.Sprite;
 
 public class Main {
 	
-	
-	
-	public static void playMusic(String filepath)
-	{
-		
-		//InputStream music;
-		File music = new File(filepath);
-		try {
-			
-			/*music = new FileInputStream (new File(filepath));
-			AudioStream audios = new AudioStream(music);
-			AudioPlayer.player.start(audios);*/
-			
-			AudioInputStream audioIn = AudioSystem.getAudioInputStream(music); 
-			Clip clip = AudioSystem.getClip(); 
-			clip.open(audioIn);
-			clip.start();
-			
-			
-			
-		}catch(Exception e) {
-			
-			System.out.println(e);
-		}
-		
-		
-	}
-	
 	public static void main(String [] args) {
+		
+		
+		Sprite monSprite = new Sprite(); //Création de l'objet Sprite qui est l'image de notre moto
+		
+		//Création des différentes classes du modèle MVC
+		Controleur c = new Controleur(); //Controleur 
+		Affichage view = new Affichage(c, monSprite); //Vue 
+		Etat e = new Etat(c); // Modele
+		Route r = new Route(c); // Route
+		
+		Repaint t =  new Repaint(c); //Initialisation du thread Repaint pour actualiser l'affichage
+		new Thread(t).start(); //Lancement du thread
 
-		Sprite monSprite = new Sprite();
+		view.addKeyListener(c); // Binder les touches du clavier
 		
-		Controleur c = new Controleur();
-		Affichage view = new Affichage(c, monSprite);
-		Etat e = new Etat(c);
-		Route r = new Route(c);
-		Repaint t =  new Repaint(c); 
-		new Thread(t).start(); 
-
-		view.addKeyListener(c);
+		playMusic("Musique/alt-236-soundtracks-blue-books.wav"); //Lancement de la musique de fond au lancement de l'application 
 		
-		playMusic("Musique/alt-236-soundtracks-blue-books.wav");
+		Avancer a = new Avancer(c); // Initialisation du thread de déplacement 
+		new Thread(a).start(); //Lancement du thread de déplacement
 		
-
-		
-		
-		Avancer a = new Avancer(c); 
-		new Thread(a).start();
-		
+		//Création de la fenetre et ajout des elements 
 		JFrame fenetre = new JFrame("Projet IHM");
-		fenetre.addKeyListener(c);
+		fenetre.addKeyListener(c); 
 		fenetre.add(view);
 		fenetre.pack();
 		fenetre.setVisible(true);		
 		
-		
 		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+	
+	/*
+	 * Methode qui prend en paramètre le path d'un fichier audio et lance la musique 
+	 * 
+	 * @param String FilePath
+	 */
+	public static void playMusic(String filepath)
+	{
+		
+		File music = new File(filepath); //File 
+		try {
+			AudioInputStream audioIn = AudioSystem.getAudioInputStream(music);  // extraction de l'audio 
+			Clip clip = AudioSystem.getClip(); 
+			clip.open(audioIn);
+			clip.start(); //Lancement de la lecture
+						
+		}catch(Exception e) {
+			
+			System.out.println(e); // Gestion d'erreurs
+		}
+		
+		
 	}
 }
 

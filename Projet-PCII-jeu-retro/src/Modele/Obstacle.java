@@ -5,30 +5,24 @@ import Controleur.Controleur;
 	
 public class Obstacle {
 	
-	private int posX = 0;
-	private int posXInitiale = 0;
-	private int posY = 0;
-	private int dimensionX = 50;
-	private int dimensionY = 50;
+	private int posX = 0; //position x de l'obstacle
+	private int posXInitiale = 0; // position initiale x de l'obstacle
+	private int posY = 0; // position y de l'obstacle
+	private int dimensionX = 50; // dimension largeur de l'obstacle
+	private int dimensionY = 50; // hauteur
+	
 	private Controleur monControleur;
-	private int dimensionXMax = 40;
-	private int dimensionYMax = 80;
-	private int coefVitesseDescente = 1;
+	
+	private int dimensionXMax = 40; //dimension max largeur
+	private int dimensionYMax = 80; // dimension max hauteur 
+	private int coefVitesseDescente = 1; //Vitesse de déplacement dans l'interface 
 
 
-
-	public int getCoefVitesseDescente() {
-		return coefVitesseDescente;
-	}
-
-
-
-	public void setCoefVitesseDescente(int coefVitesseDescente) {
-		this.coefVitesseDescente = coefVitesseDescente;
-	}
-
-
-
+	/*
+	 * CONSTRUCTEUR de classe 
+	 * initialise les valeur de l'obstacle comme la position etc..
+	 * @param Controleur
+	 */
 	public Obstacle(Controleur monControleur) {
 		
 		this.monControleur = monControleur;
@@ -49,10 +43,14 @@ public class Obstacle {
 		
 		this.posY = this.monControleur.getMonAffichage().getHorizon() - dimensionX -  this.monControleur.getMonEtat().getDistance();
 		
-		System.out.println("Ytest : " + alea);
+		//System.out.println("Ytest : " + alea);
 		
 	}
 	
+	
+	//---------------------------------------------------------------------------------
+	// GETTERS & SETTERS
+	//---------------------------------------------------------------------------------
 	
 	
 	public int getDimensionXMax() {
@@ -123,6 +121,17 @@ public class Obstacle {
 	public void setMonControleur(Controleur monControleur) {
 		this.monControleur = monControleur;
 	}
+	
+	public int getCoefVitesseDescente() {
+		return coefVitesseDescente;
+	}
+
+
+
+	public void setCoefVitesseDescente(int coefVitesseDescente) {
+		this.coefVitesseDescente = coefVitesseDescente;
+	}
+
 	
 	
 }
